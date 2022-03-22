@@ -23,14 +23,14 @@ module.exports = {
     matictestnet: {
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: [process.env.MATICTEST_PRIVATE_KEY],
-      gas: 2100000,
+      gas: 3100000,
       gasPrice: 8000000000,
     },
     maticmainnet: {
-      url: "https://rpc-mainnet.maticvigil.com/",
+      url: "https://polygon-rpc.com/",
       accounts: [process.env.MATICMAIN_PRIVATE_KEY],
-      gas: 2100000,
-      gasPrice: 8000000000,
+      gas: 21000000,
+      gasPrice: 80000000000,
     },
   },
 };
