@@ -1,0 +1,50 @@
+html {
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+.app {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.variable-display {
+  display: flex;
+  margin: 10px;
+}
+
+.variable-display-titles {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.variable-display-title {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+  height: 50px;
+}
+
+.variable-display-values {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.variable-display-value {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  margin: 0 10px;
+  height: 50px;
+}
+
+.screen > .app {
+  position: absolute;
+  left: 120%;
+}

@@ -1,0 +1,124 @@
+.main_page > img {
+  min-width: 100vw;
+  height: 100vh;
+}
+.main_page {
+  position: relative;
+  height: 100vh;
+}
+
+.main_page > .wallet_connect {
+  position: absolute;
+  top: 5px;
+  right: 1%;
+}
+
+.main_page > p {
+  position: absolute;
+  top: 5px;
+  left: 40%;
+  right: 40%;
+  color: whitesmoke;
+  font-size: large;
+}
+
+.main_page > .container {
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  right: 15%;
+  width: 70vw;
+  height: 60vh;
+  border: 1px solid gray;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.main_page > .container > .top {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  top: 6%;
+}
+.main_page > .container > .top > .spacing {
+  flex: 1;
+}
+.main_page > .container > .top > .left {
+  flex: 2;
+  text-align: left;
+}
+.main_page > .container > .top > .left > button {
+  color: rgb(34, 34, 34);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 12px auto;
+}
+.main_page > .container > .top > .left > button:hover {
+  color: brown;
+  transition: color 0.4s ease-out;
+}
+
+.main_page > .container > .top > .right {
+  flex: 7;
+}
+
+.main_page > .container > .bottom_info {
+  position: absolute;
+  top: 80%;
+  width: 90%;
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+  color: whitesmoke;
+}
+
+.main_page > .container > .bottom_info > button {
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  border: 1px solid gray;
+  color: rgb(34, 34, 34);
+  background-color: var(--font-color);
+}
+
+@media screen and (max-width: 750px) {
+  .main_page > img {
+    height: 60vh !important;
+  }
+  .main_page > p {
+    font-size: 14px !important;
+  }
+  .main_page > .container {
+    height: 50% !important;
+  }
+  .main_page > .container > .bottom_info > p {
+    font-size: 60% !important;
+  }
+}
+@media screen and (max-width: 800px) {
+  .main_page > img {
+    height: 70vh !important;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .main_page > img {
+    height: 90vh;
+  }
+  .main_page > p {
+    font-size: 18px;
+    left: auto;
+  }
+  .main_page > .container {
+    height: 48% !important;
+    width: 90vw;
+    left: 5vw;
+    right: 5vw;
+  }
+  .main_page > .container > .bottom_info > p {
+    font-size: 80%;
+  }
+}

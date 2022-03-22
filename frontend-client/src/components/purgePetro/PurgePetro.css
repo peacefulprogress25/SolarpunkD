@@ -1,0 +1,64 @@
+.purge_petro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.purge_petro > p {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 15px;
+  font-weight: 550;
+}
+
+.purge_petro > .input {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.purge_petro > .input > input {
+  padding: 12px;
+  border: 1px solid rgba(34, 34, 34, 0.6);
+  color: rgb(34, 34, 34);
+  background-color: rgba(255, 255, 255, 0.6);
+  margin-left: 0;
+  max-width: 20vw;
+  max-height: 3%;
+  font-size: 15px;
+  outline: none;
+}
+
+.purge_petro > .input > button {
+  position: absolute;
+  right: 1px;
+  top: 0.8rem;
+  bottom: 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  color: rgba(34, 34, 34, 0.6);
+  background-color: initial;
+  outline: none;
+  cursor: pointer;
+}
+
+.purge_petro > .input > button:hover {
+  color: red;
+  transition: color 0.4s ease-out;
+}
+
+.purge_petro > button {
+  color: rgba(34, 34, 34, 0.6);
+  background-color: initial;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  text-align: left;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.purge_petro > button:hover {
+  color: rgb(34, 34, 34);
+  transition: color 0.4s ease-out;
+}

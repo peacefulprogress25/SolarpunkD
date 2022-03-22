@@ -1,0 +1,35 @@
+.unlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30vh !important;
+  overflow-y: scroll;
+}
+
+.unlock::-webkit-scrollbar {
+  display: none;
+}
+
+.unlock > p {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 15px;
+  font-weight: 550;
+}
+
+.unlock > table {
+  width: 90%;
+  color: rgba(34, 34, 34, 0.8);
+  font-size: 12px;
+}
+
+.unlock > table > tr > button {
+  outline: none;
+  border: none;
+  background-color: initial;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.unlock > table > tr > button:hover {
+  color: brown;
+}

@@ -1,0 +1,45 @@
+.withdraw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.withdraw > p {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 15px;
+  font-weight: 550;
+}
+
+.withdraw > .widthdraw_value {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.withdraw > input {
+  padding: 12px;
+  border: 1px solid rgba(34, 34, 34, 0.6);
+  color: rgb(34, 34, 34);
+  background-color: rgba(255, 255, 255, 0.6);
+  margin-left: 0;
+  min-width: 35vw;
+  max-height: 3%;
+  font-size: 15px;
+  outline: none;
+}
+
+.withdraw > button {
+  color: rgba(34, 34, 34, 0.6);
+  background-color: initial;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  text-align: left;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.withdraw > button:hover {
+  color: rgb(34, 34, 34);
+  transition: color 0.4s ease-out;
+}

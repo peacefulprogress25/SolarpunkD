@@ -1,0 +1,28 @@
+.nav-container{
+    position:absolute;
+    left:0px;
+    top:0px;
+    height:80px;
+    width:100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.connection-container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right:20px;
+    top:10px;
+    margin: 10px; 
+
+}
+
+.connect-button{
+    position:absolute;
+    top:5px;
+    cursor: pointer;
+}

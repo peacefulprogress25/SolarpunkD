@@ -1,0 +1,70 @@
+.unstake {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.unstake > p {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 15px;
+  font-weight: 550;
+}
+
+.unstake > .fruit_value {
+  color: rgba(34, 34, 34, 0.5);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.unstake > .input {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.unstake > .input > input {
+  padding: 12px;
+  border: 1px solid rgba(34, 34, 34, 0.6);
+  color: rgb(34, 34, 34);
+  background-color: rgba(255, 255, 255, 0.6);
+  margin-left: 0;
+  min-width: 35vw;
+  max-height: 3%;
+  font-size: 15px;
+  outline: none;
+}
+
+.unstake > .input > button {
+  position: absolute;
+  right: 1px;
+  top: 0.8rem;
+  bottom: 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  color: rgba(34, 34, 34, 0.6);
+  background-color: initial;
+  outline: none;
+  cursor: pointer;
+}
+
+.unstake > .input > button:hover {
+  color: red;
+  transition: color 0.4s ease-out;
+}
+
+.unstake > button {
+  color: rgba(34, 34, 34, 0.6);
+  background-color: initial;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  text-align: left;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.unstake > button:hover {
+  color: rgb(34, 34, 34);
+  transition: color 0.4s ease-out;
+}
