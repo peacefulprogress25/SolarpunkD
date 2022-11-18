@@ -30,6 +30,8 @@ const StableCoin = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
         StableCoinJson.address,
         StableCoinJson.abi,
@@ -38,7 +40,7 @@ const StableCoin = () => {
       try {
         const allowance = await contract.increaseAllowance(
           address,
-          ethers.BigNumber.from(`${amount}000000000000000000`)
+          Amount
         );
         console.log(allowance);
       } catch (error) {
@@ -51,6 +53,8 @@ const StableCoin = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(value, 'ether');
+
       const contract = new ethers.Contract(
         StableCoinJson.address,
         StableCoinJson.abi,
@@ -58,7 +62,7 @@ const StableCoin = () => {
       );
       try {
         const info = await contract.mint(
-          ethers.BigNumber.from(`${value}000000000000000000`),
+          Amount,
           address
         );
         console.log(info);

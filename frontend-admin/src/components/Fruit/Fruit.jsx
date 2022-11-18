@@ -41,13 +41,15 @@ const Fruit = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
         FruitJson.address,
         FruitJson.abi,
         signer
       );
       try {
-        const info = await contract.increaseAllowance(staking, amount);
+        const info = await contract.increaseAllowance(staking, Amount);
         console.log(info);
       } catch (error) {
         console.log(error);
@@ -113,7 +115,6 @@ const Fruit = () => {
         placeholder="Staking Address"
         variant="filled"
         helperText="Staking Address"
-        placeholder="Staking Address"
         value={earth.stakingAddress}
         onChange={(e) => setEarth({ ...earth, stakingAddress: e.target.value })}
       />

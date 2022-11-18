@@ -229,13 +229,15 @@ const ExitQueue = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(data, 'ether');
+
       const contract = new ethers.Contract(
         ExitQueueJson.address,
         ExitQueueJson.abi,
         signer
       );
       try {
-        await contract.setMaxPerEpoch(`${data}000000000000000000`);
+        await contract.setMaxPerEpoch(Amount);
         maxPerEpoch();
       } catch (error) {
         console.log(error);
@@ -247,13 +249,15 @@ const ExitQueue = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(data, 'ether');
+
       const contract = new ethers.Contract(
         ExitQueueJson.address,
         ExitQueueJson.abi,
         signer
       );
       try {
-        await contract.setMaxPerAddress(`${data}000000000000000000`);
+        await contract.setMaxPerAddress(Amount);
         maxPerAddress();
       } catch (error) {
         console.log(error);
@@ -485,12 +489,11 @@ const ExitQueue = () => {
               <Typography variant="p" style={{ fontWeight: "200" }}>
                 {getData.maxPerEpoch
                   ? ` uint256:${getData.maxPerEpoch}
-                uint:${
-                  Math.round(
+                uint:${Math.round(
                     (getData.maxPerEpoch / Math.pow(10, 18) + Number.EPSILON) *
-                      100
+                    100
                   ) / 100
-                }`
+                  }`
                   : ""}
               </Typography>
             </div>
@@ -499,13 +502,12 @@ const ExitQueue = () => {
               <Typography variant="p" style={{ fontWeight: "200" }}>
                 {getData.maxPerAddress
                   ? `uint256:${getData.maxPerAddress}
-                   uint:${
-                     Math.round(
-                       (getData.maxPerAddress / Math.pow(10, 18) +
-                         Number.EPSILON) *
-                         100
-                     ) / 100
-                   }`
+                   uint:${Math.round(
+                    (getData.maxPerAddress / Math.pow(10, 18) +
+                      Number.EPSILON) *
+                    100
+                  ) / 100
+                  }`
                   : ""}
               </Typography>
             </div>

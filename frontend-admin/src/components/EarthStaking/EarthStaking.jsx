@@ -311,6 +311,8 @@ const EarthStaking = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
         EarthStakingJson.address,
         EarthStakingJson.abi,
@@ -318,7 +320,7 @@ const EarthStaking = () => {
       );
       try {
         const info = await contract.balance(
-          ethers.BigNumber.from(`${amount}000000000000000000`)
+          Amount
         );
         setStakingBalance({
           ...stakingBalance,
@@ -335,13 +337,15 @@ const EarthStaking = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
         EarthStakingJson.address,
         EarthStakingJson.abi,
         signer
       );
       try {
-        const info = await contract.stake(`${amount}000000000000000000`);
+        const info = await contract.stake(Amount);
         setData({
           ...data,
           stake: { amountEarth: "", amountFruit: info.toString() },
@@ -356,13 +360,15 @@ const EarthStaking = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
         EarthStakingJson.address,
         EarthStakingJson.abi,
         signer
       );
       try {
-        const info = await contract.unstake(`${amount}000000000000000000`);
+        const info = await contract.unstake(Amount);
         console.log(info);
       } catch (error) {
         console.log(error);
@@ -401,14 +407,14 @@ const EarthStaking = () => {
             </Button>
           </div>
 
-          <div className="variable-display-title">
+          {/* <div className="variable-display-title">
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={EXIT_QUEUE}
             >
               EXIT_QUEUE
             </Button>
-          </div>
+          </div> */}
           <div className="variable-display-title">
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
@@ -555,9 +561,8 @@ const EarthStaking = () => {
               style={{ fontWeight: "200", fontSize: "13px" }}
             >
               {getData.accumulationFactor
-                ? `uint256:${getData.accumulationFactor} uint:${
-                    getData.accumulationFactor / Math.pow(2, 64)
-                  }`
+                ? `uint256:${getData.accumulationFactor} uint:${getData.accumulationFactor / Math.pow(2, 64)
+                }`
                 : ""}
             </Typography>
           </div>
@@ -612,13 +617,12 @@ const EarthStaking = () => {
       <p variant="h6" style={{ fontWeight: "200", fontSize: "13px" }}>
         {stakingBalance.receivedBalance
           ? `uint256:${stakingBalance.receivedBalance}
-                uint:${
-                  Math.round(
-                    (stakingBalance.receivedBalance / Math.pow(10, 18) +
-                      Number.EPSILON) *
-                      100
-                  ) / 100
-                }`
+                uint:${Math.round(
+            (stakingBalance.receivedBalance / Math.pow(10, 18) +
+              Number.EPSILON) *
+            100
+          ) / 100
+          }`
           : null}
       </p>
 
@@ -629,7 +633,7 @@ const EarthStaking = () => {
         Balance
       </Button>
       <Divider />
-
+      {/* 
       <TextField
         required
         fullWidth
@@ -645,7 +649,7 @@ const EarthStaking = () => {
         onClick={() => setExitQueue(data.exitQueue)}
       >
         SetExitQueue
-      </Button>
+      </Button> */}
       <Divider />
       <TextField
         required
@@ -703,6 +707,7 @@ const EarthStaking = () => {
       </Button>
 
       <Divider />
+
       <TextField
         required
         fullWidth

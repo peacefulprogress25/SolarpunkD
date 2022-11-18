@@ -1,9 +1,21 @@
 const express = require("express");
 const app = express();
-
 const fs = require("fs");
-const { exec, execSync } = require("child_process");
 
+const StableCoinPreviousData = fs.readFileSync(
+  "frontend-admin/src/abi/StableCoin.json"
+);
+const { exec, execSync } = require("child_process");
+const {
+  earthStaking: { epochSizeSeconds, startTimestamp },
+  presale: { mintMultiple },
+  stableCoin: stableCoinAddress,
+} = require("./scripts//deployParameters.json");
+
+const StableCoinData = {
+  address: stableCoinAddress,
+  abi: JSON.parse(StableCoinPreviousData.toString()).abi,
+};
 let croneIsStoped;
 let croneTime;
 let harvestDistributionPercentage;
@@ -33,15 +45,15 @@ app.post("/deploy-all", async (req, res) => {
       "./scripts/deployAddresses.json",
       JSON.stringify({
         EarthERC20Token: result[0], //future-change
-        ExitQueue: result[1],
-        EarthStaking: result[2],
-        Fruit: result[3],
-        LockedFruit: result[4],
-        StableCoin: result[5], //future-change
-        EarthTreasury: result[6],
-        MintAllowance: result[7],
-        PresaleAllocation: result[8],
-        Presale: result[9],
+        // ExitQueue: result[1],
+        EarthStaking: result[1],
+        Fruit: result[2],
+        // LockedFruit: result[4],
+        StableCoin: stableCoinAddress, //future-change
+        EarthTreasury: result[3],
+        MintAllowance: result[4],
+        // PresaleAllocation: result[5],
+        Presale: result[5],
       })
     );
   });

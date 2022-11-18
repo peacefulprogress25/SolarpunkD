@@ -194,18 +194,20 @@ const PreSale = () => {
     }
   };
 
-  const mintAndStake = async (_amountPaidStablec) => {
+  const mint = async (_amountPaidStablec) => {
     if (typeof window.ethereum !== undefined) {
       const providers = new ethers.providers.Web3Provider(window.ethereum);
       const signer = providers.getSigner();
+      const Amount = ethers.utils.parseUnits(_amountPaidStablec, 'ether');
+
       const contract = new ethers.Contract(
         PresaleJson.address,
         PresaleJson.abi,
         signer
       );
       try {
-        const info = await contract.mintAndStake(
-          `${_amountPaidStablec}000000000000000000`
+        const info = await contract.mint(
+          Amount
         );
         console.log(info);
       } catch ({ data }) {
@@ -288,31 +290,31 @@ const PreSale = () => {
               Staking
             </Button>
           </div>
-          <div className="variable-display-title">
+          {/* <div className="variable-display-title">
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={stakingLock}
             >
               Staking-Lock
             </Button>
-          </div>
-          <div className="variable-display-title">
+          </div> */}
+          {/* <div className="variable-display-title">
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={presaleAllocation}
             >
               Presale-Allocation
             </Button>
-          </div>
+          </div> */}
 
-          <div className="variable-display-title">
+          {/* <div className="variable-display-title">
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={unlockTimestamp}
             >
               Unlock-Timestamp
             </Button>
-          </div>
+          </div> */}
           <div className="variable-display-title">
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
@@ -350,7 +352,7 @@ const PreSale = () => {
               {getData.Staking ? `${getData.Staking}` : ""}
             </Typography>
           </div>
-
+          {/* 
           <div className="variable-display-value">
             <Typography
               variant="h6"
@@ -358,18 +360,18 @@ const PreSale = () => {
             >
               {getData.StakingLock ? `${getData.StakingLock}` : ""}
             </Typography>
-          </div>
+          </div> */}
 
-          <div className="variable-display-value">
+          {/* <div className="variable-display-value">
             <Typography
               variant="h6"
               style={{ fontWeight: "200", fontSize: "13px" }}
             >
               {getData.PresaleAllocation ? `${getData.PresaleAllocation}` : ""}
             </Typography>
-          </div>
+          </div> */}
 
-          <div className="variable-display-value">
+          {/* <div className="variable-display-value">
             <Typography
               variant="h6"
               style={{ fontWeight: "200", fontSize: "13px" }}
@@ -379,7 +381,7 @@ const PreSale = () => {
                    ${new Date(getData.UnlockTimestamp * 1000).toLocaleString()}`
                 : ""}
             </Typography>
-          </div>
+          </div> */}
 
           <div className="variable-display-value">
             <Typography
@@ -394,7 +396,7 @@ const PreSale = () => {
       <Typography variant="h6" style={{ fontWeight: "600" }}>
         Set functions
       </Typography>
-      <TextField
+      {/* <TextField
         required
         fullWidth
         label="Unlock Timestamp"
@@ -409,7 +411,7 @@ const PreSale = () => {
         onClick={() => setUnlockTimestamp(data.unlockTimestamp)}
       >
         Set-Unlock-Timestamp
-      </Button>
+      </Button> */}
       <Divider />
       <TextField
         required
@@ -417,18 +419,18 @@ const PreSale = () => {
         label="Amount Paid Stablec"
         placeholder="Amount Paid Stablec"
         variant="filled"
-        helperText="Mint earth and immediately stake"
+        helperText="Mint earth"
         value={data.amount}
         onChange={(e) => setData({ ...data, amount: e.target.value })}
       />
       <Button
         style={{ backgroundColor: "#1976d2", color: "white", margin: "10px" }}
-        onClick={() => mintAndStake(data.amount)}
+        onClick={() => mint(data.amount)}
       >
-        Mint-And-Stake
+        Mint
       </Button>
       <Divider />
-      <TextField
+      {/* <TextField
         required
         fullWidth
         label="Address"
@@ -450,7 +452,7 @@ const PreSale = () => {
         onClick={() => allocationUsed(data.address)}
       >
         Allocation-Used
-      </Button>
+      </Button> */}
       <br />{" "}
       <Button
         style={{

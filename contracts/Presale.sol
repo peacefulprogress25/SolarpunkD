@@ -20,75 +20,98 @@ contract Presale is Ownable, Pausable {
     EarthERC20Token public EARTH; // EARTH ERC20 contract
     EarthTreasury public TREASURY;
     EarthStaking public STAKING; // Staking contract
-    LockedFruit public STAKING_LOCK; // contract where fruit is locked
-    PresaleAllocation public PRESALE_ALLOCATION; // Allocation per address
+    // LockedFruit public STAKING_LOCK; // contract where fruit is locked
+    // PresaleAllocation public PRESALE_ALLOCATION; // Allocation per address
 
     // Unlock timestamp. This will change during the presale period, but will always be in a 2 week range.
-    uint256 public unlockTimestamp;
+    // uint256 public unlockTimestamp;
 
     // presale mint multiple
     uint256 public mintMultiple;
 
+    uint256 public decamicalplacemintMultiple = 10;
     // How much allocation has each user used.
-    mapping(address => uint256) public allocationUsed;
+    // mapping(address => uint256) public allocationUsed;
 
-    event MintComplete(address minter, uint256 acceptedStablec, uint256 mintedTemple, uint256 mintedFruit);
+    event MintComplete(
+        address minter,
+        uint256 acceptedStablec,
+        uint256 mintedTemple,
+        uint256 mintedFruit
+    );
 
     constructor(
-      // simple token
-      IERC20 _STABLEC,
-      EarthERC20Token _EARTH,
-      EarthStaking _STAKING,
-      LockedFruit _STAKING_LOCK,
-      EarthTreasury _TREASURY,
-      PresaleAllocation _PRESALE_ALLOCATION,
-      uint256 _mintMultiple,
-      uint256 _unlockTimestamp) {
+        // simple token
+        IERC20 _STABLEC,
+        EarthERC20Token _EARTH,
+        EarthStaking _STAKING,
+        EarthTreasury _TREASURY,
+        // PresaleAllocation _PRESALE_ALLOCATION,
+        uint256 _mintMultiple // uint256 _unlockTimestamp
+    ) {
+        STABLEC = _STABLEC;
+        EARTH = _EARTH;
+        STAKING = _STAKING;
+        TREASURY = _TREASURY;
+        // PRESALE_ALLOCATION = _PRESALE_ALLOCATION;
 
-      STABLEC = _STABLEC;
-      EARTH = _EARTH;
-      STAKING = _STAKING;
-      STAKING_LOCK = _STAKING_LOCK;
-      TREASURY = _TREASURY;
-      PRESALE_ALLOCATION = _PRESALE_ALLOCATION;
-
-      mintMultiple = _mintMultiple;
-      unlockTimestamp = _unlockTimestamp;
+        mintMultiple = _mintMultiple;
+        // unlockTimestamp = _unlockTimestamp;
     }
 
-    function setUnlockTimestamp(uint256 _unlockTimestamp) external onlyOwner {
-      unlockTimestamp = _unlockTimestamp;
-    }
+    // function setUnlockTimestamp(uint256 _unlockTimestamp) external onlyOwner {
+    //     unlockTimestamp = _unlockTimestamp;
+    // }
 
     /** mint earth and immediately stake, with a bonus + lockin period */
-    function mintAndStake(uint256 _amountPaidStablec) external whenNotPaused {
-      (uint256 totalAllocation, uint256 allocationEpoch) = PRESALE_ALLOCATION.allocationOf(msg.sender);
+    // function mintAndStake(uint256 _amountPaidStablec) external whenNotPaused {
+    //     (uint256 totalAllocation, uint256 allocationEpoch) = PRESALE_ALLOCATION
+    //         .allocationOf(msg.sender);
 
-      require(_amountPaidStablec + allocationUsed[msg.sender] <= totalAllocation, "Amount requested exceed address allocation");
-      require(allocationEpoch <= STAKING.currentEpoch(), "User's allocated epoch is in the future");
+    //     require(
+    //         _amountPaidStablec + allocationUsed[msg.sender] <= totalAllocation,
+    //         "Amount requested exceed address allocation"
+    //     );
+    //     require(
+    //         allocationEpoch <= STAKING.currentEpoch(),
+    //         "User's allocated epoch is in the future"
+    //     );
 
-      (uint256 _stablec, uint256 _earth) = TREASURY.intrinsicValueRatio();
+    //     (uint256 _stablec, uint256 _earth) = TREASURY.intrinsicValueRatio();
 
-      allocationUsed[msg.sender] += _amountPaidStablec;
+    //     allocationUsed[msg.sender] += _amountPaidStablec;
 
-      console.log('_amountPaidStablec' , _amountPaidStablec);
-      uint256 _earthMinted = _amountPaidStablec * _earth / _stablec / mintMultiple;
+    //     console.log("_amountPaidStablec", _amountPaidStablec);
+    //     uint256 _earthMinted = (10 * _amountPaidStablec * _earth) /
+    //         _stablec /
+    //         mintMultiple;
 
-      // pull stablec from staker and immediately transfer back to treasury
+    //     // pull stablec from staker and immediately transfer back to treasury
 
+    //     SafeERC20.safeTransferFrom(
+    //         STABLEC,
+    //         msg.sender,
+    //         address(TREASURY),
+    //         _amountPaidStablec
+    //     );
 
-      SafeERC20.safeTransferFrom(STABLEC, msg.sender, address(TREASURY), _amountPaidStablec);
+    //     // mint earth and allocate to the staking contract
+    //     EARTH.mint(address(this), _earthMinted);
+    //     SafeERC20.safeIncreaseAllowance(EARTH, address(STAKING), _earthMinted);
 
-      // mint earth and allocate to the staking contract
-     EARTH.mint(address(this), _earthMinted);
-     SafeERC20.safeIncreaseAllowance(EARTH, address(STAKING), _earthMinted);
+    //     uint256 amountFruit = STAKING.stake(_earthMinted);
 
-      uint256 amountFruit = STAKING.stake(_earthMinted);
-      SafeERC20.safeIncreaseAllowance(STAKING.FRUIT(), address(STAKING_LOCK), amountFruit);
-      STAKING_LOCK.lockFor(msg.sender, amountFruit, unlockTimestamp);
+    //     // SafeERC20.safeIncreaseAllowance(STAKING.FRUIT(), address(STAKING_LOCK), amountFruit);
+    //     // STAKING_LOCK.lockFor(msg.sender, amountFruit, unlockTimestamp);
+    //     SafeERC20.safeTransfer(STAKING.FRUIT(), msg.sender, amountFruit);
 
-     emit MintComplete(msg.sender, _amountPaidStablec, _earthMinted, amountFruit);
-    }
+    //     emit MintComplete(
+    //         msg.sender,
+    //         _amountPaidStablec,
+    //         _earthMinted,
+    //         amountFruit
+    //     );
+    // }
 
     /**
      * Pause contract. Either emergency or at the end of presale
@@ -102,5 +125,64 @@ contract Presale is Ownable, Pausable {
      */
     function unpause() external onlyOwner {
         _unpause();
+    }
+
+    // added mint v1
+    function mint(uint256 _amountPaidStablec) external whenNotPaused {
+        // (uint256 totalAllocation, uint256 allocationEpoch) = PRESALE_ALLOCATION
+        //     .allocationOf(msg.sender);
+        require(_amountPaidStablec > 0, "amount must be greater then zero");
+        require(
+            STABLEC.allowance(msg.sender, address(this)) >= _amountPaidStablec,
+            "Insufficient stablecoin allowance. Cannot unstake"
+        );
+        // require(
+        //     _amountPaidStablec + allocationUsed[msg.sender] <= totalAllocation,
+        //     "Amount requested exceed address allocation"
+        // );
+
+        // require(
+        //     allocationEpoch <= STAKING.currentEpoch(),
+        //     "User's allocated epoch is in the future"
+        // );
+
+        (uint256 _stablec, uint256 _earth) = TREASURY.intrinsicValueRatio();
+
+        // allocationUsed[msg.sender] += _amountPaidStablec;
+
+        console.log("_amountPaidStablec", _amountPaidStablec);
+
+        uint256 _earthMinted = (10 * _amountPaidStablec * _earth) /
+            _stablec /
+            mintMultiple;
+
+        // pull stablec from staker and immediately transfer back to treasury
+
+        SafeERC20.safeTransferFrom(
+            STABLEC,
+            msg.sender,
+            address(TREASURY),
+            _amountPaidStablec
+        );
+
+        EARTH.mint(msg.sender, _earthMinted); //user getting earth tokens
+
+        // v1 commented so the user only get the earth tokens and not fruit tokens
+        // mint earth and allocate to the staking contract
+        // EARTH.mint(address(this), _earthMinted);
+        // SafeERC20.safeIncreaseAllowance(EARTH, address(STAKING), _earthMinted);
+
+        // uint256 amountFruit = STAKING.stake(_earthMinted);
+
+        // SafeERC20.safeIncreaseAllowance(STAKING.FRUIT(), address(STAKING_LOCK), amountFruit);
+        // STAKING_LOCK.lockFor(msg.sender, amountFruit, unlockTimestamp);
+        // SafeERC20.safeTransfer(STAKING.FRUIT(), msg.sender, amountFruit);
+
+        // emit MintComplete(
+        //     msg.sender,
+        //     _amountPaidStablec,
+        //     _earthMinted,
+        //     amountFruit
+        // );
     }
 }

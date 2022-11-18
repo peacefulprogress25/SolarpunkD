@@ -186,13 +186,13 @@ const Navbar = () => {
                 display: "block",
               }}
             >
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   window.location.href = "/exit-queue";
                 }}
               >
                 <Typography textAlign="center">EXIT-QUEUE</Typography>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 onClick={() => {
                   window.location.href = "/earth-staking";
@@ -214,20 +214,21 @@ const Navbar = () => {
               >
                 <Typography textAlign="center">EARTH-TREASURY</Typography>
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   window.location.href = "/presale-allocation";
                 }}
               >
                 <Typography textAlign="center">PRESALE-ALLOCATION</Typography>
-              </MenuItem>
-              <MenuItem
+              </MenuItem> */}
+
+              {/* <MenuItem
                 onClick={() => {
                   window.location.href = "/locked-fruit";
                 }}
               >
                 <Typography textAlign="center">LOCKED-FRUIT</Typography>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 onClick={() => {
                   window.location.href = "/earth-erc20token";
@@ -267,25 +268,25 @@ const Navbar = () => {
               style={
                 walletAddress
                   ? {
-                      backgroundColor: "red",
-                      color: "white",
-                      cursor: "pointer",
-                      outline: "none",
-                      border: "none",
-                      height: "30px",
-                      width: "100px",
-                      margin: "10px 0",
-                    }
+                    backgroundColor: "red",
+                    color: "white",
+                    cursor: "pointer",
+                    outline: "none",
+                    border: "none",
+                    height: "30px",
+                    width: "100px",
+                    margin: "10px 0",
+                  }
                   : {
-                      backgroundColor: "green",
-                      color: "white",
-                      cursor: "pointer",
-                      outline: "none",
-                      border: "none",
-                      height: "30px",
-                      width: "100px",
-                      margin: "10px 0",
-                    }
+                    backgroundColor: "green",
+                    color: "white",
+                    cursor: "pointer",
+                    outline: "none",
+                    border: "none",
+                    height: "30px",
+                    width: "100px",
+                    margin: "10px 0",
+                  }
               }
             >
               {walletAddress ? "DISCONNECT" : "CONNECT"}

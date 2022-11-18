@@ -16,6 +16,23 @@ import TextField from "@mui/material/TextField";
 import "./SinglePage.css";
 
 const SinglePage = () => {
+  const ethers = require("ethers");
+
+  const [data, setData] = useState({
+    addMinter: {
+      address: "",
+    },
+    increaseAllowance: {
+      address: "",
+      amount: "",
+    },
+  });
+  const [stakingBalance, setStakingBalance] = useState();
+  const [usermint, setUsermint] = useState({
+    value: "",
+    address: "",
+  });
+
   // seedMint
   const [seedMint, setSeedMint] = useState({
     increaseAllowanceAddress: EarthTreasuryJson.address,
@@ -39,20 +56,10 @@ const SinglePage = () => {
     increasedAmount: "",
   });
 
-  // Locked Fruit
-  const [lockedFruit, setlockedFruit] = useState({
-    walletAddress: localStorage.getItem("walletAddress"),
-    amount: "",
-    numLocks: "",
-  });
-
   const [unStake, setUnStake] = useState({
     amount: "",
   });
 
-  const [withdrawEpoch, setWithdrawEpoch] = useState({
-    nextUnallocatedEpoch: "",
-  });
 
   // Fetching all the contract addresses from the localStorage
   useEffect(() => {
@@ -107,25 +114,25 @@ const SinglePage = () => {
 
   // Seed Mint
   const increaseAllowance = async (address, amount) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        StableCoinJson.address,
-        StableCoinJson.abi,
-        signer
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const Amount = ethers.utils.parseUnits(amount, 'ether');
+
+    const contract = new ethers.Contract(
+      StableCoinJson.address,
+      StableCoinJson.abi,
+      signer
+    );
+    try {
+      console.log("Contract: ", contract);
+      console.log("Address: ", address, "Amount: ", amount);
+      const allowance = await contract.increaseAllowance(
+        address,
+        Amount
       );
-      try {
-        console.log("Contract: ", contract);
-        console.log("Address: ", address, "Amount: ", amount);
-        const allowance = await contract.increaseAllowance(
-          address,
-          ethers.BigNumber.from(`${amount}000000000000000000`)
-        );
-        console.log(allowance);
-      } catch (error) {
-        console.log(error);
-      }
+      console.log(allowance);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -151,6 +158,9 @@ const SinglePage = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const AmountStablec = ethers.utils.parseUnits(seedMint.amountStablec, 'ether');
+      const AmountTemple = ethers.utils.parseUnits(seedMint.amountTemple, 'ether');
+
       const contract = new ethers.Contract(
         EarthTreasuryJson.address,
         EarthTreasuryJson.abi,
@@ -158,8 +168,8 @@ const SinglePage = () => {
       );
       try {
         await contract.seedMint(
-          ethers.BigNumber.from(`${seedMint.amountStablec}000000000000000000`),
-          ethers.BigNumber.from(`${seedMint.amountTemple}000000000000000000`)
+          AmountStablec,
+          AmountTemple
         );
       } catch (error) {
         console.log(error);
@@ -167,41 +177,21 @@ const SinglePage = () => {
     }
   };
 
-  //   MintStack
-  const setAllocation = async (staker, amount, epoch) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        PresaleAllocationJson.address,
-        PresaleAllocationJson.abi,
-        signer
-      );
-      try {
-        const info = await contract.setAllocation(
-          staker,
-          ethers.BigNumber.from(`${amount}000000000000000000`),
-          epoch
-        );
-        console.log(info);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
-  const mintAndStake = async (_amountPaidStablec) => {
+
+  const mint = async (_amountPaidStablec) => {
     if (typeof window.ethereum !== undefined) {
       const providers = new ethers.providers.Web3Provider(window.ethereum);
       const signer = providers.getSigner();
+      const price = ethers.utils.parseUnits(_amountPaidStablec, 'ether');
       const contract = new ethers.Contract(
         PresaleJson.address,
         PresaleJson.abi,
         signer
       );
       try {
-        const info = await contract.mintAndStake(
-          `${_amountPaidStablec}000000000000000000`
+        const info = await contract.mint(
+          price                                                             // changed 
         );
         console.log(info);
       } catch ({ data }) {
@@ -210,42 +200,7 @@ const SinglePage = () => {
     }
   };
 
-  //   Locked OG : Withdraw
-  const numLocks = async (_staker) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        LockedFruitJson.address,
-        LockedFruitJson.abi,
-        signer
-      );
-      try {
-        const info = await contract.numLocks(_staker);
-        setlockedFruit({ ...lockedFruit, numLocks: info.toString() });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
-  const withdraw = async (_idx) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        LockedFruitJson.address,
-        LockedFruitJson.abi,
-        signer
-      );
-      try {
-        const info = await contract.withdraw(_idx);
-        console.log(info.toString());
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   //   Unstake
   const allowance = async (wallet, staking) => {
@@ -269,6 +224,8 @@ const SinglePage = () => {
   const increaseAllowanceUnstake = async (staking, amount) => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
         FruitJson.address,
@@ -278,7 +235,7 @@ const SinglePage = () => {
       try {
         const info = await contract.increaseAllowance(
           staking,
-          `${amount}000000000000000000`
+          Amount
         );
         console.log(info.toString());
       } catch (error) {
@@ -291,6 +248,8 @@ const SinglePage = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
         EarthStakingJson.address,
         EarthStakingJson.abi,
@@ -299,7 +258,7 @@ const SinglePage = () => {
       console.log(contract);
       try {
         const info = await contract.unstake(
-          ethers.BigNumber.from(`${amount}000000000000000000`)
+          Amount
         );
         console.log(info.toString());
       } catch (error) {
@@ -308,34 +267,69 @@ const SinglePage = () => {
     }
   };
 
-  //   Withdraw
-  const withdrawNextUnallocatedEpoch = async () => {
+  const mintFunction = async (value, address) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const Amount = ethers.utils.parseUnits(value, 'ether');
+    const contract = new ethers.Contract(
+      StableCoinJson.address,
+      StableCoinJson.abi,
+      signer
+    );
+    try {
+      const info = await contract.mint(
+        Amount,
+        address
+      );
+      console.log(info);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const stake = async (amount) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const Amount = ethers.utils.parseUnits(amount, 'ether');
+
+    const contract = new ethers.Contract(
+      EarthStakingJson.address,
+      EarthStakingJson.abi,
+      signer
+    );
+    try {
+      const info = await contract.stake(Amount);
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const increaseAllowanceearth = async (address, amount) => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
-        ExitQueueJson.address,
-        ExitQueueJson.abi,
+        EarthERC20TokenJson.address,
+        EarthERC20TokenJson.abi,
         signer
       );
-      await contract
-        .nextUnallocatedEpoch()
-        .then(async (res) => {
-          console.log(res.toString());
-          setWithdrawEpoch({
-            ...withdrawEpoch,
-            nextUnallocatedEpoch: res.toString(),
-          });
-          console.log(withdrawEpoch.nextUnallocatedEpoch);
-          await contract.withdraw(res.toString()).then((info) => {
-            console.log(info);
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+        const allowance = await contract.increaseAllowance(
+          address,
+          Amount
+        );
+        console.log(allowance);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
+
+
 
   return (
     <div
@@ -353,10 +347,43 @@ const SinglePage = () => {
       </Typography>
 
       <>
+
+        <p className="steps"> Mint stablecoin to the user address </p>
+        <TextField
+          required
+          fullWidth
+          label="Mint Value"
+          placeholder="Mint Value"
+          variant="filled"
+          helperText="Mint amount"
+          value={usermint.value}
+          onChange={(e) => setUsermint({ ...usermint, value: e.target.value })}
+        />
+        <TextField
+          required
+          fullWidth
+          label="Mint address"
+          placeholder="Mint address"
+          variant="filled"
+          helperText="user address to mint"
+          value={usermint.address}
+          onChange={(e) => setUsermint({ ...usermint, address: e.target.value })}
+        />
+        <Button
+          style={{
+            backgroundColor: "#1976d2",
+            color: "white",
+            marginBottom: "30px",
+          }}
+          onClick={() => mintFunction(usermint.value, usermint.address)}
+        >
+          Mint stable coin to user account
+        </Button>
+
         <p className="heading">
-          Temple Treasury: <i>Seed Mint</i>
+          earth Treasury: <i>Seed Mint</i>
         </p>
-        <p className="steps">I.Simple Token Increase Allowance</p>
+        <p className="steps">I.Stablecoin Increase Allowance to EarthTreasury</p>
 
         <TextField
           required
@@ -365,7 +392,7 @@ const SinglePage = () => {
           placeholder="Contract Address"
           variant="filled"
           defaultValue={seedMint.increaseAllowanceAddress}
-          helperText="Temple Treasury Contract Address"
+          helperText="earth Treasury Contract Address"
           onChange={(e) =>
             setSeedMint({
               ...seedMint,
@@ -380,7 +407,7 @@ const SinglePage = () => {
           label="Amount"
           placeholder="Amount"
           variant="filled"
-          helperText="Simple Token Amount"
+          helperText="stablecoin Amount"
           value={seedMint.amount}
           onChange={(e) => setSeedMint({ ...seedMint, amount: e.target.value })}
         />
@@ -394,9 +421,9 @@ const SinglePage = () => {
             )
           }
         >
-          Increase-Allowance
+          Increase- stablecoin allowance to earthTreasury
         </Button>
-        <p className="steps">II. Add Temple Token Minter</p>
+        <p className="steps">II. Adding earthTreasury as Minter to EarthERC20Token</p>
 
         <TextField
           required
@@ -404,7 +431,7 @@ const SinglePage = () => {
           label="Minter address"
           placeholder="Minter address"
           variant="filled"
-          helperText="Treasury Contract Address"
+          helperText="earth Treasury Contract Address"
           defaultValue={seedMint.addMinterAddress}
           onChange={(e) =>
             setSeedMint({ ...seedMint, addMinterAddress: e.target.value })
@@ -417,7 +444,7 @@ const SinglePage = () => {
         >
           Add-Minter
         </Button>
-        <p className="steps">III. Seed Mint</p>
+        <p className="steps">III. Seed Mint calling earthTreasury seedmint function</p>
         <TextField
           required
           fullWidth
@@ -434,10 +461,10 @@ const SinglePage = () => {
         <TextField
           required
           fullWidth
-          label="Amount Temple"
-          placeholder="Amount Temple"
+          label="Amount earth"
+          placeholder="Amount earth"
           variant="filled"
-          helperText="Amount Temple"
+          helperText="Amount earth"
           value={seedMint.amountTemple}
           onChange={(e) =>
             setSeedMint({ ...seedMint, amountTemple: e.target.value })
@@ -451,9 +478,9 @@ const SinglePage = () => {
           Seed Mint
         </Button>
         <p className="heading">
-          Presale Contract : <i>MintStack</i>
+          Presale Contract : <i> Adding as Mint to EarthERC20Token and increaseing </i>
         </p>
-        <p className="steps">I. Add minter Presale Contract</p>
+        <p className="steps">I. Adding Presale Contract as minter to EarthERC20 token </p>
         <TextField
           required
           fullWidth
@@ -471,10 +498,10 @@ const SinglePage = () => {
           style={{ backgroundColor: "#1976d2", color: "white" }}
           onClick={() => addMinter(mintStake.addMinterAddress)}
         >
-          Add Minter
+          Adding presale as Minter to EarthERC20
         </Button>
 
-        <p className="steps">II. Simple token increase allowance </p>
+        <p className="steps">II.Increasing stablecoin  allowance to presale contract </p>
         <TextField
           required
           fullWidth
@@ -499,7 +526,6 @@ const SinglePage = () => {
           placeholder="Amount"
           variant="filled"
           helperText="Increase Allowance Amount"
-          placeholder=""
           value={mintStake.increaseAllowanceAmount}
           onChange={(e) =>
             setMintStake({
@@ -518,81 +544,18 @@ const SinglePage = () => {
             )
           }
         >
-          Increase Allowance
+          Increase stablecoin allowance to presale
         </Button>
 
-        <p className="steps">III. Presale allocation : Set allocation </p>
-        <TextField
-          required
-          fullWidth
-          label="User Address"
-          placeholder="User Address"
-          variant="filled"
-          helperText="User wallet Address"
-          // defaultValue={localStorage.getItem("walletAddress")}
-          value={mintStake.presaleAllocationAddress}
-          onChange={(e) =>
-            setMintStake({
-              ...mintStake,
-              presaleAllocationAddress: e.target.value,
-            })
-          }
-        />
 
+        <p className="steps"> Mint earth token by passing the stablecoin</p>
         <TextField
           required
           fullWidth
           label="Amount"
           placeholder="Amount"
           variant="filled"
-          helperText="Temple Amount"
-          value={mintStake.presaleAllocationAmount}
-          onChange={(e) =>
-            setMintStake({
-              ...mintStake,
-              presaleAllocationAmount: e.target.value,
-            })
-          }
-        />
-
-        <TextField
-          required
-          fullWidth
-          label="Epoch"
-          placeholder="Epoch"
-          variant="filled"
-          helperText="Epoch Time"
-          defaultValue={mintStake.presaleAllocationEpoch}
-          // value={mintStake.presaleAllocationEpoch}
-          onChange={(e) =>
-            setMintStake({
-              ...mintStake,
-              presaleAllocationEpoch: e.target.value,
-            })
-          }
-        />
-
-        <Button
-          style={{ backgroundColor: "#1976d2", color: "white" }}
-          onClick={() =>
-            setAllocation(
-              mintStake.presaleAllocationAddress,
-              mintStake.presaleAllocationAmount,
-              mintStake.presaleAllocationEpoch
-            )
-          }
-        >
-          Set-Allocation
-        </Button>
-
-        <p className="steps">IV. MintStack </p>
-        <TextField
-          required
-          fullWidth
-          label="Amount"
-          placeholder="Amount"
-          variant="filled"
-          helperText="Mint and Stake Amount"
+          helperText="Mint Amount"
           value={mintStake.mintStakeAmount}
           onChange={(e) =>
             setMintStake({ ...mintStake, mintStakeAmount: e.target.value })
@@ -601,67 +564,107 @@ const SinglePage = () => {
 
         <Button
           style={{ backgroundColor: "#1976d2", color: "white" }}
-          onClick={() => mintAndStake(mintStake.mintStakeAmount)}
+          onClick={() => mint(mintStake.mintStakeAmount)}
         >
-          MintStack
+          Mint EarthERC20Token by passing stablecoin
         </Button>
       </>
       <>
         <p className="heading">
-          Locked OG : <i>Withdraw</i>
+          stake Earth Tokens to earthstaking contract
         </p>
-        <p className="steps">I. Locks corresponding to wallet address</p>
+
+        <p className="heading">
+          IncreaseAllowance of earthstaking from user account : <i>Unstacking</i>
+        </p>
+
         <TextField
           required
           fullWidth
-          label="Wallet Address"
-          placeholder="Wallet Address"
+          label="Increase Allowance Address"
+          placeholder="Allowance Address"
           variant="filled"
-          helperText="User Wallet Address"
-          // defaultValue={localStorage.getItem("walletAddress")}
-          value={lockedFruit.walletAddress}
+          helperText="earthstaking  Address"
+          value={EarthStakingJson.address}
+        // onChange={(e) =>
+        //   setData({
+        //     ...data,
+        //     increaseAllowance: {
+        //       ...data.increaseAllowance,
+        //       address: e.target.value,
+        //     },
+        //   })
+        // }
+        />
+        <TextField
+          required
+          fullWidth
+          label="Increase Allowance Amount"
+          placeholder="Allowance Amount"
+          variant="filled"
+          helperText="Increase Allowance Amount"
+          value={data.increaseAllowance.amount}
           onChange={(e) =>
-            setlockedFruit({
-              ...lockedFruit,
-              walletAddress: e.target.value,
+            setData({
+              ...data,
+              increaseAllowance: {
+                ...data.increaseAllowance,
+                amount: e.target.value,
+              },
             })
           }
         />
-        {lockedFruit.numLocks ? `Num locks: ${lockedFruit.numLocks}` : null}
         <Button
-          style={{ backgroundColor: "#1976d2", color: "white" }}
-          onClick={() => numLocks(lockedFruit.walletAddress)}
+          style={{
+            backgroundColor: "#1976d2",
+            color: "white",
+            marginBottom: "30px",
+          }}
+          onClick={() =>
+            increaseAllowanceearth(
+              EarthStakingJson.address,
+              data.increaseAllowance.amount
+            )
+          }
         >
-          NumLocks
+          Increase-Allowance
         </Button>
 
-        <p className="steps">II. WithDraw</p>
+        <p className="steps">
+          Stake EarthERC20Token to presale
+        </p>
+
         <TextField
           required
           fullWidth
-          label="Lock number"
-          placeholder="Lock number from 0,1,...."
+          label="Amount Earth"
+          placeholder="Amount Earth"
           variant="filled"
-          helperText="Lock number, eq = currentLockNumber-1"
-          value={lockedFruit.amount}
+          helperText="Amount Earth"
+          value={stakingBalance}
           onChange={(e) =>
-            setlockedFruit({ ...lockedFruit, amount: e.target.value })
+            setStakingBalance(e.target.value)
           }
         />
         <Button
-          style={{ backgroundColor: "#1976d2", color: "white" }}
-          onClick={() => withdraw(lockedFruit.amount)}
+          style={{
+            backgroundColor: "#1976d2",
+            color: "white",
+            marginBottom: "30px",
+          }}
+          onClick={() => stake(stakingBalance)}
         >
-          Withdraw
+          Staking  earth tokens
         </Button>
-        <p className="heading">
-          TempleStacking : <i>Unstacking</i>
-        </p>
+
+
+
+
+
         <p className="steps">
-          I. Attention !!! Scripts Fruit : increaseAllowance
+          I.Increase fruit Allowance to earthstaking to unstake
         </p>
 
-        <p className="steps">Increase Allowance</p>
         <TextField
           required
           fullWidth
@@ -699,18 +702,18 @@ const SinglePage = () => {
             )
           }
         >
-          Increase Allowance
+          Increase fruit Allowance to Earthstaking
         </Button>
 
         {/* Unstake */}
-        <p className="steps">II. Unstake</p>
+        <p className="steps">II. Unstake earth tokens by passing Fruit Tokens</p>
         <TextField
           required
           fullWidth
           label="Unstake Amount"
           placeholder="Unstake Amount"
           variant="filled"
-          helperText="Unstake Amount"
+          helperText="Unstake fruit Amount"
           value={unStake.amount}
           onChange={(e) => setUnStake({ ...unStake, amount: e.target.value })}
         />
@@ -721,33 +724,12 @@ const SinglePage = () => {
           style={{ backgroundColor: "#1976d2", color: "white" }}
           onClick={() => unstake(unStake.amount)}
         >
-          Unstake
+          Unstake earthtoken
         </Button>
         <br />
 
-        {/* ExitQueue:Withdraw */}
-        <p className="heading">
-          ExitQueue : <i>WithDraw</i>
-        </p>
-        <p className="steps">I. Get Next Unallocated Epoch and Withdraw</p>
-        <Typography variant="h6" style={{ fontWeight: "600" }}>
-          {withdrawEpoch.nextUnallocatedEpoch
-            ? `Next unallocated epoch: ${withdrawEpoch.nextUnallocatedEpoch}`
-            : ""}
-        </Typography>
-        <br />
 
-        {/* Button for function withdrawNextUnallocatedEpoch */}
-        <Button
-          style={{
-            backgroundColor: "#1976d2",
-            color: "white",
-            marginBottom: "30px",
-          }}
-          onClick={withdrawNextUnallocatedEpoch}
-        >
-          Withdraw
-        </Button>
+
       </>
     </div>
   );

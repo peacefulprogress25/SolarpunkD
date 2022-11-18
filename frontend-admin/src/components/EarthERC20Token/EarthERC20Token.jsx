@@ -46,6 +46,8 @@ const EarthERC20Token = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+
       const contract = new ethers.Contract(
         EarthERC20TokenJson.address,
         EarthERC20TokenJson.abi,
@@ -54,7 +56,7 @@ const EarthERC20Token = () => {
       try {
         const allowance = await contract.increaseAllowance(
           address,
-          `${amount}000000000000000000`
+          Amount
         );
         console.log(allowance);
       } catch (error) {

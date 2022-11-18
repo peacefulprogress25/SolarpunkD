@@ -1,9 +1,8 @@
 const hre = require("hardhat");
 const fs = require("fs");
 const {
-  exitQueue: { epochSize, maxPerAddress, maxPerEpoch },
   earthStaking: { epochSizeSeconds, startTimestamp },
-  presale: { mintMultiple, unlockTimestamp },
+  presale: { mintMultiple },
   stableCoin: stableCoinAddress,
 } = require("./deployParameters.json");
 
@@ -30,36 +29,35 @@ async function main() {
 
   console.log(earthERC20Token.address);
 
-  // 2. ExitQueue Deployment
-  const ExitQueue = await hre.ethers.getContractFactory("ExitQueue");
-  const exitQueue = await ExitQueue.deploy(
-    earthERC20Token.address,
-    maxPerEpoch,
-    maxPerAddress,
-    epochSize
-  );
-  await exitQueue.deployed();
+  // // 2. ExitQueue Deployment
+  // const ExitQueue = await hre.ethers.getContractFactory("ExitQueue");
+  // const exitQueue = await ExitQueue.deploy(
+  //   earthERC20Token.address,
+  //   maxPerEpoch,
+  //   maxPerAddress,
+  //   epochSize
+  // );
+  // await exitQueue.deployed();
 
-  const exitQueueData = {
-    address: exitQueue.address,
-    abi: JSON.parse(exitQueue.interface.format("json")),
-  };
-  fs.writeFileSync(
-    "frontend-admin/src/abi/ExitQueue.json",
-    JSON.stringify(exitQueueData)
-  );
-  fs.writeFileSync(
-    "frontend-client/src/abi/ExitQueue.json",
-    JSON.stringify(exitQueueData)
-  );
+  // const exitQueueData = {
+  //   address: exitQueue.address,
+  //   abi: JSON.parse(exitQueue.interface.format("json")),
+  // };
+  // fs.writeFileSync(
+  //   "frontend-admin/src/abi/ExitQueue.json",
+  //   JSON.stringify(exitQueueData)
+  // );
+  // fs.writeFileSync(
+  //   "frontend-client/src/abi/ExitQueue.json",
+  //   JSON.stringify(exitQueueData)
+  // );
 
-  console.log(exitQueue.address);
+  // console.log(exitQueue.address);
 
   // 3. EarthStaking Deployment
   const EarthStaking = await hre.ethers.getContractFactory("EarthStaking");
   const earthStaking = await EarthStaking.deploy(
     earthERC20Token.address,
-    exitQueue.address,
     epochSizeSeconds,
     startTimestamp
   );
@@ -98,25 +96,25 @@ async function main() {
     JSON.stringify(FruitData)
   );
 
-  // 5. LockedFruit Deployment
-  const LockedFruit = await hre.ethers.getContractFactory("LockedFruit");
-  const lockedFruit = await LockedFruit.deploy(fruit);
-  await lockedFruit.deployed();
+  // // 5. LockedFruit Deployment
+  // const LockedFruit = await hre.ethers.getContractFactory("LockedFruit");
+  // const lockedFruit = await LockedFruit.deploy(fruit);
+  // await lockedFruit.deployed();
 
-  const LockedFruitData = {
-    address: lockedFruit.address,
-    abi: JSON.parse(lockedFruit.interface.format("json")),
-  };
-  fs.writeFileSync(
-    "frontend-admin/src/abi/LockedFruit.json",
-    JSON.stringify(LockedFruitData)
-  );
-  fs.writeFileSync(
-    "frontend-client/src/abi/LockedFruit.json",
-    JSON.stringify(LockedFruitData)
-  );
+  // const LockedFruitData = {
+  //   address: lockedFruit.address,
+  //   abi: JSON.parse(lockedFruit.interface.format("json")),
+  // };
+  // fs.writeFileSync(
+  //   "frontend-admin/src/abi/LockedFruit.json",
+  //   JSON.stringify(LockedFruitData)
+  // );
+  // fs.writeFileSync(
+  //   "frontend-client/src/abi/LockedFruit.json",
+  //   JSON.stringify(LockedFruitData)
+  // );
 
-  console.log(lockedFruit.address);
+  // console.log(lockedFruit.address);
 
   // 6. StableCoin Deployment
   const StableCoinPreviousData = fs.readFileSync(
@@ -159,29 +157,49 @@ async function main() {
   console.log(earthTreasury.address);
 
   // 8. MintAllowance Deployment
-  console.log(await earthTreasury.MINT_ALLOWANCE());
+  // console.log(await earthTreasury.MINT_ALLOWANCE());
 
-  // 9. PresaleAllocation Deployment
-  const PresaleAllocation = await hre.ethers.getContractFactory(
-    "PresaleAllocation"
-  );
-  const presaleAllocation = await PresaleAllocation.deploy();
-  await presaleAllocation.deployed();
-
-  const PresaleAllocationData = {
-    address: presaleAllocation.address,
-    abi: JSON.parse(presaleAllocation.interface.format("json")),
+  const mintALLow = await earthTreasury.MINT_ALLOWANCE();
+  console.log(mintALLow);
+  const MintALLow = {
+    address: mintALLow,
+    abi: JSON.parse(
+      fs.readFileSync("artifacts/contracts/MintAllowance.sol/MintAllowance.json").toString()
+    ).abi,
   };
   fs.writeFileSync(
-    "frontend-admin/src/abi/PresaleAllocation.json",
-    JSON.stringify(PresaleAllocationData)
+    "frontend-admin/src/abi/MintAllowance.json",
+    JSON.stringify(MintALLow)
   );
   fs.writeFileSync(
-    "frontend-client/src/abi/PresaleAllocation.json",
-    JSON.stringify(PresaleAllocationData)
+    "frontend-client/src/abi/MintAllowance.json",
+    JSON.stringify(MintALLow)
   );
 
-  console.log(presaleAllocation.address);
+
+
+
+  // 9. PresaleAllocation Deployment
+  // const PresaleAllocation = await hre.ethers.getContractFactory(
+  //   "PresaleAllocation"
+  // );
+  // const presaleAllocation = await PresaleAllocation.deploy();
+  // await presaleAllocation.deployed();
+
+  // const PresaleAllocationData = {
+  //   address: presaleAllocation.address,
+  //   abi: JSON.parse(presaleAllocation.interface.format("json")),
+  // };
+  // fs.writeFileSync(
+  //   "frontend-admin/src/abi/PresaleAllocation.json",
+  //   JSON.stringify(PresaleAllocationData)
+  // );
+  // fs.writeFileSync(
+  //   "frontend-client/src/abi/PresaleAllocation.json",
+  //   JSON.stringify(PresaleAllocationData)
+  // );
+
+  // console.log(presaleAllocation.address);
 
   // 10. Presale Deployment
   const PRESALE = await hre.ethers.getContractFactory("Presale");
@@ -189,11 +207,10 @@ async function main() {
     stableCoinAddress,
     earthERC20Token.address,
     earthStaking.address,
-    lockedFruit.address,
     earthTreasury.address,
-    presaleAllocation.address,
-    mintMultiple,
-    unlockTimestamp
+    // presaleAllocation.address,
+    mintMultiple
+    // unlockTimestamp
   );
   await preSALE.deployed();
 

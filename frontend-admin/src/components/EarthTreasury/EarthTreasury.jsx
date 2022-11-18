@@ -249,6 +249,9 @@ const EarthTreasury = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const AmountStablec = ethers.utils.parseUnits(amountStablec, 'ether');
+      const AmountTemple = ethers.utils.parseUnits(amountEarth, 'ether');
+
       const contract = new ethers.Contract(
         EarthTreasuryJson.address,
         EarthTreasuryJson.abi,
@@ -256,8 +259,8 @@ const EarthTreasury = () => {
       );
       try {
         await contract.seedMint(
-          ethers.BigNumber.from(`${amountStablec}000000000000000000`),
-          ethers.BigNumber.from(`${amountEarth}000000000000000000`)
+          AmountStablec,
+          AmountTemple
         );
       } catch (error) {
         console.log(error);
@@ -398,6 +401,8 @@ const EarthTreasury = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      const AmountStablec = ethers.utils.parseUnits(amountStablec, 'ether');
+
       const contract = new ethers.Contract(
         EarthTreasuryJson.address,
         EarthTreasuryJson.abi,
@@ -406,7 +411,7 @@ const EarthTreasury = () => {
       try {
         await contract.allocateTreasuryStablec(
           _contract,
-          `${amountStablec}000000000000000000`
+          AmountStablec
         );
         console.log("AllocateTreasuryStablec");
         contract.off("AllocateTreasuryStablecTest");
@@ -644,45 +649,41 @@ const EarthTreasury = () => {
             >
               {getData.maxPerAddress
                 ? `uint256:${getData.maxPerAddress}
-                   uint:${
-                     Math.round(
-                       (getData.maxPerAddress / Math.pow(10, 18) +
-                         Number.EPSILON) *
-                         100
-                     ) / 100
-                   }`
+                   uint:${Math.round(
+                  (getData.maxPerAddress / Math.pow(10, 18) +
+                    Number.EPSILON) *
+                  100
+                ) / 100
+                }`
                 : ""}
               {getData.IntrinsicValueRatio.StableC &&
-              getData.IntrinsicValueRatio.Earth
-                ? `StableC: ${
-                    Math.round(
-                      (getData.IntrinsicValueRatio.StableC / Math.pow(10, 18) +
-                        Number.EPSILON) *
-                        100
-                    ) / 100
-                  },Earth: ${
-                    Math.round(
-                      (getData.IntrinsicValueRatio.Earth / Math.pow(10, 18) +
-                        Number.EPSILON) *
-                        100
-                    ) / 100
-                  }, Ratio: ${
-                    parseInt(
-                      Math.round(
-                        (getData.IntrinsicValueRatio.StableC /
-                          Math.pow(10, 18) +
-                          Number.EPSILON) *
-                          100
-                      ) / 100
-                    ) /
-                    parseInt(
-                      Math.round(
-                        (getData.IntrinsicValueRatio.Earth / Math.pow(10, 18) +
-                          Number.EPSILON) *
-                          100
-                      ) / 100
-                    )
-                  }`
+                getData.IntrinsicValueRatio.Earth
+                ? `StableC: ${Math.round(
+                  (getData.IntrinsicValueRatio.StableC / Math.pow(10, 18) +
+                    Number.EPSILON) *
+                  100
+                ) / 100
+                },Earth: ${Math.round(
+                  (getData.IntrinsicValueRatio.Earth / Math.pow(10, 18) +
+                    Number.EPSILON) *
+                  100
+                ) / 100
+                }, Ratio: ${parseInt(
+                  Math.round(
+                    (getData.IntrinsicValueRatio.StableC /
+                      Math.pow(10, 18) +
+                      Number.EPSILON) *
+                    100
+                  ) / 100
+                ) /
+                parseInt(
+                  Math.round(
+                    (getData.IntrinsicValueRatio.Earth / Math.pow(10, 18) +
+                      Number.EPSILON) *
+                    100
+                  ) / 100
+                )
+                }`
                 : ""}
             </Typography>
           </div>
@@ -750,13 +751,13 @@ const EarthTreasury = () => {
       </div>
       {getData.pools.length !== 0
         ? getData.pools.map((pool) => {
-            <Typography
-              variant="h6"
-              style={{ fontWeight: "200", fontSize: "13px" }}
-            >
-              {pool}
-            </Typography>;
-          })
+          <Typography
+            variant="h6"
+            style={{ fontWeight: "200", fontSize: "13px" }}
+          >
+            {pool}
+          </Typography>;
+        })
         : ""}
 
       <Typography variant="h6" style={{ fontWeight: "600" }}>

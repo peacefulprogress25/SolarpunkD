@@ -56,7 +56,7 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    checkNetwork();
+    // checkNetwork();
   }, [currentNetwork]);
 
   // On network change
@@ -231,7 +231,7 @@ const MainPage = () => {
         const ratio =
           info.earth.toString() !== "0"
             ? parseFloat(info.stablec.toString() / Math.pow(10, 18)) /
-              parseFloat(info.earth.toString() / Math.pow(10, 18))
+            parseFloat(info.earth.toString() / Math.pow(10, 18))
             : 0;
 
         const mintMultiple = await presaleContract.mintMultiple();
@@ -299,13 +299,13 @@ const MainPage = () => {
               Stake
             </button>
             <br />
-            <button
+            {/* <button
               value="unlock"
               onClick={(e) => setcurrentFunction(e.target.value)}
             >
               Unlock
             </button>
-            <br />
+            <br /> */}
             <button
               value="unstake"
               onClick={(e) => setcurrentFunction(e.target.value)}
@@ -313,12 +313,12 @@ const MainPage = () => {
               Unstake
             </button>
             <br />
-            <button
+            {/* <button
               value="withdraw"
               onClick={(e) => setcurrentFunction(e.target.value)}
             >
               Withdraw
-            </button>
+            </button> */}
           </div>
           <div className="right">
             <FunctionImplementation
