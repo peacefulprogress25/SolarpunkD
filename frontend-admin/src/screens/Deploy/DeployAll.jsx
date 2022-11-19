@@ -10,32 +10,32 @@ import TextField from "@mui/material/TextField";
 import { DatePicker } from "../../components";
 
 const DeployAll = () => {
-  const [exitQueue, setExitQueue] = useState({
-    maxPerEpoch: "1000",
-    maxPerAddress: "1000",
-    epochSize: "10",
-  });
+  // const [exitQueue, setExitQueue] = useState({
+  //   maxPerEpoch: "1000",
+  //   maxPerAddress: "1000",
+  //   epochSize: "10",
+  // });
   const [earthStaking, setEarthStaking] = useState({
     epochSizeSeconds: "86400",
     startTimestamp: "",
   });
   const [presale, setPresale] = useState({
     mintMultiple: "",
-    unlockTimestamp: "",
   });
+  const [mintMultiple, setMintMultiple] = useState("");
   const [stableCoin, setStableCoin] = useState("");
   const [isLoading, setisLoading] = useState(false);
 
   const deploy = async () => {
     setisLoading(true);
     if (
-      !exitQueue.maxPerEpoch ||
-      !exitQueue.maxPerAddress ||
-      !exitQueue.epochSize ||
+      // !exitQueue.maxPerEpoch ||
+      // !exitQueue.maxPerAddress ||
+      // !exitQueue.epochSize ||
       !earthStaking.epochSizeSeconds ||
       !earthStaking.startTimestamp ||
       !presale.mintMultiple ||
-      !presale.unlockTimestamp ||
+      // !presale.unlockTimestamp ||
       !stableCoin
     ) {
       setisLoading(false);
@@ -43,15 +43,6 @@ const DeployAll = () => {
     }
 
     let postData = {
-      exitQueue: {
-        ...exitQueue,
-        maxPerEpoch: ethers.BigNumber.from(
-          `${exitQueue.maxPerEpoch}000000000000000000`
-        ),
-        maxPerAddress: ethers.BigNumber.from(
-          `${exitQueue.maxPerAddress}000000000000000000`
-        ),
-      },
       earthStaking,
       presale,
       stableCoin,
@@ -70,9 +61,16 @@ const DeployAll = () => {
     setEarthStaking({ ...earthStaking, startTimestamp: value });
   };
 
-  const handleUnlockTimestampChange = (value) => {
-    setPresale({ ...presale, unlockTimestamp: value });
-  };
+  // const handleUnlockTimestampChange = (value) => {
+  //   setPresale({ ...presale, unlockTimestamp: value });
+  // };
+  const setpresaleMintMultiple = (value) => {
+    setMintMultiple(value);
+
+    let t = (parseFloat(value)) * 10;
+
+    setPresale({ ...presale, mintMultiple: t });
+  }
 
   return (
     <div
@@ -87,7 +85,7 @@ const DeployAll = () => {
       <Typography variant="h5" style={{ fontWeight: "800" }}>
         Deploy All Contracts
       </Typography>
-
+      {/* 
       <Typography variant="p" style={{ fontWeight: "500" }}>
         ExitQueue
       </Typography>
@@ -128,7 +126,7 @@ const DeployAll = () => {
         onChange={(e) =>
           setExitQueue({ ...exitQueue, epochSize: e.target.value })
         }
-      />
+      /> */}
       <Typography variant="p" style={{ fontWeight: "500" }}>
         EarthStaking
       </Typography>
@@ -154,8 +152,8 @@ const DeployAll = () => {
       <p variant="p" style={{ fontWeight: "200", fontSize: "12px" }}>
         {earthStaking.startTimestamp
           ? `Epoch: ${earthStaking.startTimestamp}, Local: ${new Date(
-              earthStaking.startTimestamp * 1000
-            ).toLocaleString()}`
+            earthStaking.startTimestamp * 1000
+          ).toLocaleString()}`
           : ""}
       </p>
       <br />
@@ -167,18 +165,18 @@ const DeployAll = () => {
         required
         fullWidth
         label="Mint multiple"
-        placeholder="Mint multiple"
+        placeholder="Mint multiple 1.2 ,1.3 etc"
         variant="filled"
-        helperText="Mint multiple"
-        value={presale.mintMultiple}
+        helperText="Mint multiple 1.2,1.3 etc"
+        value={mintMultiple}
         onChange={(e) =>
-          setPresale({ ...presale, mintMultiple: e.target.value })
+          setpresaleMintMultiple(e.target.value)
         }
       />
 
       <br />
       <br />
-      <DatePicker
+      {/* <DatePicker
         label="Unlock timestamp"
         change={handleUnlockTimestampChange}
       />
@@ -188,7 +186,7 @@ const DeployAll = () => {
               presale.unlockTimestamp * 1000
             ).toLocaleString()}`
           : ""}
-      </p>
+      </p> */}
       <br />
       <Typography variant="p" style={{ fontWeight: "500" }}>
         Stable Coin
