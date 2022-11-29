@@ -32,14 +32,18 @@ const Stake = ({ account, totalEarth, treasuryFunction }) => {
         signer
       );
       try {
-        setEarthBalance(
-          (
-            Math.round(
-              (100 * (await contract.balanceOf(account)).toString()) /
-                Math.pow(10, 18)
-            ) / 100
-          ).toString()
-        );
+        let t = await contract.balanceOf(account);
+        let balanace = t / Math.pow(10, 18);
+        console.log(balanace);
+        setEarthBalance(balanace);
+        // setEarthBalance(
+        //   (
+        //     Math.round(
+        //       (100 * (await contract.balanceOf(account)).toString()) /
+        //       Math.pow(10, 18)
+        //     ) / 100
+        //   ).toString()
+        // );
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +56,8 @@ const Stake = ({ account, totalEarth, treasuryFunction }) => {
 
   const stake = async (amount) => {
     if (typeof window.ethereum !== "undefined") {
-      if (amount > parseInt(earthBalance)) {
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+      if (Amount < earthBalance) {
         return Toast.info("Amount exceeds earth balance", 1000, null);
       }
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -71,13 +76,13 @@ const Stake = ({ account, totalEarth, treasuryFunction }) => {
         setIsLoading(true);
         const allowance = await earthErc20Contract.increaseAllowance(
           EarthStakingJSON.address,
-          `${amount}000000000000000000`
+          Amount
         );
 
         await allowance.wait();
 
         const info = await earthStakingContract.stake(
-          `${amount}000000000000000000`
+          Amount
         );
         console.log(info.toString());
         await info.wait();
@@ -97,6 +102,8 @@ const Stake = ({ account, totalEarth, treasuryFunction }) => {
       }
     }
   };
+
+
 
   return (
     <div className="stake">

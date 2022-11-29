@@ -13,6 +13,7 @@ import {
   Fruit,
   Addresses,
   Navbar,
+
 } from "./components";
 
 import { DeployAll, Settings, Home } from "./screens";
@@ -30,7 +31,7 @@ function App() {
             <div>
               <Router>
                 <Route exact path="/deploy-all" component={DeployAll} />
-                <Route exact path="/singlepage" exact component={SinglePage} />
+                <Route exact path="/singlepage" component={SinglePage} />
                 <Route exact path="/exit-queue" component={ExitQueue} />
                 <Route exact path="/" component={Home} />
                 <Route exact path="/earth-staking" component={EarthStaking} />
@@ -50,6 +51,7 @@ function App() {
                 <Route exact path="/stable-coin" component={StableCoin} />
                 <Route exact path="/fruit" component={Fruit} />
                 <Route exact path="/settings" component={Settings} />
+
               </Router>
             </div>
           </div>

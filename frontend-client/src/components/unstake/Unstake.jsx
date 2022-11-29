@@ -31,10 +31,15 @@ const Unstake = ({ account, totalEarth, treasuryFunction }) => {
         signer
       );
       try {
-        const info = await contract.balanceOf(account);
-        const amount =
-          Math.round(100 * (info.toString() / Math.pow(10, 18))) / 100;
-        setAllowanceAmount(amount.toString());
+        let t = await contract.balanceOf(account);
+        let balanace = t / Math.pow(10, 18);
+        console.log(balanace);
+        setAllowanceAmount(balanace);
+        // const info = await contract.balanceOf(account);
+
+        // const amount =
+        //   Math.round(100 * (info.toString() / Math.pow(10, 18))) / 100;
+        // setAllowanceAmount(amount.toString());
       } catch (error) {
         console.log(error);
       }
@@ -47,7 +52,8 @@ const Unstake = ({ account, totalEarth, treasuryFunction }) => {
 
   const unstake = async (amount) => {
     if (typeof window.ethereum !== "undefined") {
-      if (amount > parseInt(allowanceAmount)) {
+      const Amount = ethers.utils.parseUnits(amount, 'ether');
+      if (Amount < allowanceAmount) {
         return Toast.info("Amount exceeds fruit balance", 1000, null);
       }
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -66,13 +72,13 @@ const Unstake = ({ account, totalEarth, treasuryFunction }) => {
         setIsLoading(true);
         let info = await fruitContract.increaseAllowance(
           EarthStakingJSON.address,
-          `${amount}000000000000000000`
+          Amount
         );
         console.log(info.toString());
         await info.wait();
 
         info = await earthStakingContract.unstake(
-          ethers.BigNumber.from(`${amount}000000000000000000`)
+          ethers.BigNumber.from(Amount)
         );
         await info.wait();
 

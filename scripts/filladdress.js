@@ -23,6 +23,8 @@ const eartht = require("../frontend-admin/src/abi/EarthTreasury.json");
 const presaleall = require("../frontend-admin/src/abi/PresaleAllocation.json");
 const presale = require("../frontend-admin/src/abi/Presale.json");
 const mintallow = require("../frontend-admin/src/abi/MintAllowance.json");
+const nft = require("../frontend-admin/src/abi/Nft.json");
+
 
 async function main() {
 
@@ -41,6 +43,8 @@ async function main() {
             MintAllowance: mintallow.address,     //manul
             // PresaleAllocation: presaleall.address,
             Presale: presale.address,
+            Nft: nft.address,
+
         })
     );
 

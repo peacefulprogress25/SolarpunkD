@@ -4,6 +4,7 @@ const {
   earthStaking: { epochSizeSeconds, startTimestamp },
   presale: { mintMultiple },
   stableCoin: stableCoinAddress,
+  nftaddress: nftcontractaddress,
 } = require("./deployParameters.json");
 
 async function main() {
@@ -209,7 +210,8 @@ async function main() {
     earthStaking.address,
     earthTreasury.address,
     // presaleAllocation.address,
-    mintMultiple
+    mintMultiple,
+    nftcontractaddress
     // unlockTimestamp
   );
   await preSALE.deployed();
@@ -228,6 +230,24 @@ async function main() {
   );
 
   console.log(preSALE.address);
+
+  const nftData = fs.readFileSync(
+    "frontend-admin/src/abi/Nft.json"
+  );
+  const NftData = {
+    address: nftcontractaddress,
+    abi: JSON.parse(nftData.toString()).abi,
+  };
+
+  fs.writeFileSync(
+    "frontend-admin/src/abi/Nft.json",
+    JSON.stringify(NftData)
+  );
+  fs.writeFileSync(
+    "frontend-client/src/abi/Nft.json",
+    JSON.stringify(NftData)
+  );
+  console.log(NftData.address);
 }
 
 main()

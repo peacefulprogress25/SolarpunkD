@@ -11,6 +11,8 @@ import "./EarthStaking.sol";
 import "./PresaleAllocation.sol";
 import "./LockedFruit.sol";
 import "hardhat/console.sol";
+import "./ERC271.sol";
+import "./Nft.sol";
 
 /**
  * Presale campaign, which lets users to mint and stake based on current IV and a whitelist
@@ -19,7 +21,8 @@ contract Presale is Ownable, Pausable {
     IERC20 public STABLEC; // STABLEC contract address
     EarthERC20Token public EARTH; // EARTH ERC20 contract
     EarthTreasury public TREASURY;
-    EarthStaking public STAKING; // Staking contract
+    EarthStaking public STAKING;
+    Nft public NFT; // Staking contract
     // LockedFruit public STAKING_LOCK; // contract where fruit is locked
     // PresaleAllocation public PRESALE_ALLOCATION; // Allocation per address
 
@@ -40,6 +43,8 @@ contract Presale is Ownable, Pausable {
         uint256 mintedFruit
     );
 
+    mapping(uint256 => bool) mintedrecord;
+
     constructor(
         // simple token
         IERC20 _STABLEC,
@@ -47,7 +52,8 @@ contract Presale is Ownable, Pausable {
         EarthStaking _STAKING,
         EarthTreasury _TREASURY,
         // PresaleAllocation _PRESALE_ALLOCATION,
-        uint256 _mintMultiple // uint256 _unlockTimestamp
+        uint256 _mintMultiple, // uint256 _unlockTimestamp
+        Nft _NFT
     ) {
         STABLEC = _STABLEC;
         EARTH = _EARTH;
@@ -57,6 +63,11 @@ contract Presale is Ownable, Pausable {
 
         mintMultiple = _mintMultiple;
         // unlockTimestamp = _unlockTimestamp;
+        NFT = _NFT;
+    }
+
+    function updateNftaddress(Nft _NFT) external onlyOwner {
+        NFT = _NFT;
     }
 
     // function setUnlockTimestamp(uint256 _unlockTimestamp) external onlyOwner {
@@ -136,6 +147,19 @@ contract Presale is Ownable, Pausable {
             STABLEC.allowance(msg.sender, address(this)) >= _amountPaidStablec,
             "Insufficient stablecoin allowance. Cannot unstake"
         );
+
+        uint256[] memory nftlist = NFT.NftsownedbyAddress(msg.sender);
+        require(nftlist.length > 0, "you own o nfts");
+        uint8 i;
+        bool k = false;
+        uint256 nftIdUsing;
+        for (i = 0; i < nftlist.length; i++) {
+            if (mintedrecord[nftlist[i]] == false) {
+                k = true;
+                nftIdUsing = i;
+            }
+        }
+        require(k == true, "u have used all nft you own to mint earth in past");
         // require(
         //     _amountPaidStablec + allocationUsed[msg.sender] <= totalAllocation,
         //     "Amount requested exceed address allocation"
@@ -166,7 +190,7 @@ contract Presale is Ownable, Pausable {
         );
 
         EARTH.mint(msg.sender, _earthMinted); //user getting earth tokens
-
+        mintedrecord[nftIdUsing] = true;
         // v1 commented so the user only get the earth tokens and not fruit tokens
         // mint earth and allocate to the staking contract
         // EARTH.mint(address(this), _earthMinted);

@@ -214,13 +214,13 @@ const Navbar = () => {
               >
                 <Typography textAlign="center">EARTH-TREASURY</Typography>
               </MenuItem>
-              {/* <MenuItem
+              <MenuItem
                 onClick={() => {
                   window.location.href = "/presale-allocation";
                 }}
               >
-                <Typography textAlign="center">PRESALE-ALLOCATION</Typography>
-              </MenuItem> */}
+                <Typography textAlign="center">NFt-mint</Typography>
+              </MenuItem>
 
               {/* <MenuItem
                 onClick={() => {

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
+import { setMilliseconds } from "date-fns";
 
 const PreSale = () => {
   // Get data states
@@ -18,7 +19,8 @@ const PreSale = () => {
     UnlockTimestamp: "",
     MintMultiple: "",
   });
-
+  const [updateMintMultiple, setUpdateMintMultiple] = useState("");
+  const [nft, setNft] = useState("");
   // Set data states
   const [data, setData] = useState({
     address: "",
@@ -252,6 +254,44 @@ const PreSale = () => {
     }
   };
 
+  const updateMInt_Multiple = async () => {
+    if (typeof window.ethereum !== undefined) {
+      let t = (parseFloat(updateMintMultiple)) * 10;
+      const providers = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = providers.getSigner();
+      const contract = new ethers.Contract(
+        PresaleJson.address,
+        PresaleJson.abi,
+        signer
+      );
+      try {
+        const info = await contract.updateMintMuliple(t);
+        console.log(info);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const updateNft = async () => {
+    if (typeof window.ethereum !== undefined) {
+      const providers = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = providers.getSigner();
+      const contract = new ethers.Contract(
+        PresaleJson.address,
+        PresaleJson.abi,
+        signer
+      );
+      try {
+        const info = await contract.updateNftaddress(nft);
+        console.log(info);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+
   return (
     <div style={{ marginTop: "100px", position: "absolute", right: "40vw" }}>
       <CssBaseline />
@@ -475,6 +515,55 @@ const PreSale = () => {
       >
         UnPause
       </Button>
+      <br />
+
+      <Typography variant="p" style={{ fontWeight: "500" }}>
+        Presale update mint multiple
+      </Typography>
+      <TextField
+        required
+        fullWidth
+        label="Mint multiple"
+        placeholder="Mint multiple 1.2 ,1.3 etc"
+        variant="filled"
+        helperText="Mint multiple 1.2,1.3 etc"
+        value={updateMintMultiple}
+        onChange={(e) =>
+          setUpdateMintMultiple(e.target.value)
+        }
+      />
+      <Button
+        style={{ backgroundColor: "#1976d2", color: "white", margin: "10px" }}
+        onClick={updateMInt_Multiple}
+      >
+        Update Mint Multiple
+      </Button>
+      <br />
+      <br />
+      <br />
+      <Typography variant="p" style={{ fontWeight: "500" }}>
+        Update Nft contract address
+      </Typography>
+      <TextField
+        required
+        fullWidth
+        label="contract address"
+        placeholder="contract address"
+        variant="filled"
+        helperText="contract address"
+        value={nft}
+        onChange={(e) =>
+          setNft(e.target.value)
+        }
+      />
+      <Button
+        style={{ backgroundColor: "#1976d2", color: "white", margin: "10px" }}
+        onClick={updateNft}
+      >
+        Update Nft contract address
+      </Button>
+
+      <br />
     </div>
   );
 };

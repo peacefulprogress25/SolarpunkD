@@ -305,7 +305,6 @@ const LockedFruit = () => {
         placeholder="Locked Address"
         variant="filled"
         helperText="Locked Address"
-        placeholder="Locked Address"
         value={data.withdraw.index}
         onChange={(e) =>
           setData({

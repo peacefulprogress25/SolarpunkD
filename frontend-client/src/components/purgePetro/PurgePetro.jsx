@@ -60,16 +60,16 @@ const PurgePetro = ({ account, totalEarth, treasuryFunction }) => {
   };
 
   useEffect(() => {
-    allocationFunction();
+    // allocationFunction();
   }, [account]);
 
   const purgePetro = async (address, amount) => {
     if (typeof window.ethereum === undefined) {
       return;
     }
-    if (amount > parseInt(allocation)) {
-      return Toast.info("Amount exceeds allocation", 1000, null);
-    }
+    // if (amount > parseInt(allocation)) {
+    //   return Toast.info("Amount exceeds allocation", 1000, null);
+    // }
 
     setLoading(true);
 
@@ -86,20 +86,21 @@ const PurgePetro = ({ account, totalEarth, treasuryFunction }) => {
       signer
     );
     console.log(stableCoinContract, presaleContract, address, amount);
+    const Amount = ethers.utils.parseUnits(amount, 'ether');
     try {
       const allowance = await stableCoinContract.increaseAllowance(
         address,
-        ethers.BigNumber.from(`${amount}000000000000000000`)
+        Amount
       );
       setProcessingFunction("increase allowance");
       await allowance.wait();
       setProcessingFunction("");
       Toast.success(`Allowance Completed`, 2000, null);
-      const mintAndStake = await presaleContract.mintAndStake(
-        ethers.BigNumber.from(`${amount}000000000000000000`)
+      const Mint = await presaleContract.mint(
+        Amount
       );
-      setProcessingFunction("mint and stake");
-      await mintAndStake.wait();
+      setProcessingFunction("mint");
+      await Mint.wait();
       setProcessingFunction("");
 
       setPurge({ ...purge, amount: "" });
@@ -120,36 +121,37 @@ const PurgePetro = ({ account, totalEarth, treasuryFunction }) => {
 
   return (
     <div className="purge_petro">
-      <p>PURGE YOUR PETRO DOLLARS FOR $EARTH</p>
-      {allocation ? (
-        <>
-          <div className="input">
-            <input
-              type="text"
-              value={purge.amount}
-              onChange={(e) => setPurge({ ...purge, amount: e.target.value })}
-            />
-            <button onClick={() => setPurge({ ...purge, amount: allocation })}>
-              max
-            </button>
-          </div>
-          {account && (
-            <button
-              onClick={() => purgePetro(PresaleJSON.address, purge.amount)}
-            >
-              PURGE
-            </button>
-          )}
-          {loading ? <TailSpin color="grey" height={30} width={30} /> : ""}
-          {processingFunction.length ? (
-            <p>Wait!! {processingFunction} is running.</p>
-          ) : (
-            ""
-          )}
-        </>
-      ) : (
+      <p>Mint Earth tokens by using stable coin</p>
+      {/* {allocation ? ( */}
+      <>
+        <div className="input">
+          <input
+            type="text"
+            value={purge.amount}
+            placeholder="stable coin amount to stake"
+            onChange={(e) => setPurge({ ...purge, amount: e.target.value })}
+          />
+          {/* <button onClick={() => setPurge({ ...purge, amount: allocation })}>
+            max
+          </button> */}
+        </div>
+        {account && (
+          <button
+            onClick={() => purgePetro(PresaleJSON.address, purge.amount)}
+          >
+            Mint Earth
+          </button>
+        )}
+        {loading ? <TailSpin color="grey" height={30} width={30} /> : ""}
+        {processingFunction.length ? (
+          <p>Wait!! {processingFunction} is running.</p>
+        ) : (
+          ""
+        )}
+      </>
+      {/* ) : (
         <TailSpin color="grey" height={30} width={30} />
-      )}
+      )} */}
     </div>
   );
 };

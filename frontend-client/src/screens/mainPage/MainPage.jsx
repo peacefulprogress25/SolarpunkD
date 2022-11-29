@@ -165,11 +165,11 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    allocationFunction();
+    // allocationFunction();
   }, [account]);
 
   useEffect(() => {
-    fruitFunction();
+    // fruitFunction();
     earthFunction();
   }, [account, userData.fruit]);
 
@@ -235,8 +235,10 @@ const MainPage = () => {
             : 0;
 
         const mintMultiple = await presaleContract.mintMultiple();
+        let t = mintMultiple.toNumber() / 10;
+        console.log(t);
         setEarth(
-          Math.round(100 * (parseFloat(ratio) * parseFloat(mintMultiple))) / 100
+          Math.round(100 * (parseFloat(ratio) * parseFloat(t))) / 100
         );
       } catch (error) {
         console.log(error);
@@ -256,6 +258,7 @@ const MainPage = () => {
 
       try {
         let stablec = await earthTreasuryContract.intrinsicValueRatio();
+        console.log(stablec.stablec.toString());
         stablec = stablec.stablec.toString() / Math.pow(10, 18);
         setTreasury(stablec.toString());
       } catch (error) {
@@ -289,7 +292,7 @@ const MainPage = () => {
               value="mint-stake"
               onClick={(e) => setcurrentFunction(e.target.value)}
             >
-              Mint & Stake
+              Mint
             </button>
             <br />
             <button

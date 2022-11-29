@@ -10,6 +10,7 @@ const {
   earthStaking: { epochSizeSeconds, startTimestamp },
   presale: { mintMultiple },
   stableCoin: stableCoinAddress,
+  nftaddress: nftcontractaddress,
 } = require("./scripts//deployParameters.json");
 
 const StableCoinData = {
@@ -49,11 +50,13 @@ app.post("/deploy-all", async (req, res) => {
         EarthStaking: result[1],
         Fruit: result[2],
         // LockedFruit: result[4],
-        StableCoin: stableCoinAddress, //future-change
-        EarthTreasury: result[3],
-        MintAllowance: result[4],
+        StableCoin: result[3], //future-change
+        EarthTreasury: result[4],
+        MintAllowance: result[5],
         // PresaleAllocation: result[5],
-        Presale: result[5],
+        Presale: result[6],
+        Nft: result[7],
+
       })
     );
   });
