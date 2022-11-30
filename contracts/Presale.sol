@@ -70,6 +70,10 @@ contract Presale is Ownable, Pausable {
         NFT = _NFT;
     }
 
+    function updateMintMuliple(uint256 _mintMultiple) public onlyOwner {
+        mintMultiple = _mintMultiple;
+    }
+
     // function setUnlockTimestamp(uint256 _unlockTimestamp) external onlyOwner {
     //     unlockTimestamp = _unlockTimestamp;
     // }
@@ -139,7 +143,7 @@ contract Presale is Ownable, Pausable {
     }
 
     // added mint v1
-    function mint(uint256 _amountPaidStablec) external whenNotPaused {
+    function mint(uint256 _amountPaidStablec) external {
         // (uint256 totalAllocation, uint256 allocationEpoch) = PRESALE_ALLOCATION
         //     .allocationOf(msg.sender);
         require(_amountPaidStablec > 0, "amount must be greater then zero");
@@ -150,16 +154,16 @@ contract Presale is Ownable, Pausable {
 
         uint256[] memory nftlist = NFT.NftsownedbyAddress(msg.sender);
         require(nftlist.length > 0, "you own o nfts");
-        uint8 i;
-        bool k = false;
-        uint256 nftIdUsing;
-        for (i = 0; i < nftlist.length; i++) {
-            if (mintedrecord[nftlist[i]] == false) {
-                k = true;
-                nftIdUsing = i;
-            }
-        }
-        require(k == true, "u have used all nft you own to mint earth in past");
+        // uint8 i;
+        // bool k = false;
+        // uint256 nftIdUsing;
+        // for (i = 0; i < nftlist.length; i++) {
+        //     if (mintedrecord[nftlist[i]] == false) {
+        //         k = true;
+        //         nftIdUsing = i;
+        //     }
+        // }
+        // require(k == true, "u have used all nft you own to mint earth in past");
         // require(
         //     _amountPaidStablec + allocationUsed[msg.sender] <= totalAllocation,
         //     "Amount requested exceed address allocation"
@@ -190,7 +194,7 @@ contract Presale is Ownable, Pausable {
         );
 
         EARTH.mint(msg.sender, _earthMinted); //user getting earth tokens
-        mintedrecord[nftIdUsing] = true;
+        // mintedrecord[nftIdUsing] = true;
         // v1 commented so the user only get the earth tokens and not fruit tokens
         // mint earth and allocate to the staking contract
         // EARTH.mint(address(this), _earthMinted);

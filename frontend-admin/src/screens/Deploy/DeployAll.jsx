@@ -25,7 +25,7 @@ const DeployAll = () => {
   const [mintMultiple, setMintMultiple] = useState("");
   const [stableCoin, setStableCoin] = useState("");
   const [isLoading, setisLoading] = useState(false);
-  const [nft, setNft] = useState("");
+  const [nftaddress, setNftaddress] = useState("");
 
 
   const deploy = async () => {
@@ -39,7 +39,7 @@ const DeployAll = () => {
       !presale.mintMultiple ||
       // !presale.unlockTimestamp ||
       !stableCoin ||
-      !nft
+      !nftaddress
     ) {
       setisLoading(false);
       return;
@@ -49,7 +49,7 @@ const DeployAll = () => {
       earthStaking,
       presale,
       stableCoin,
-      nft,
+      nftaddress,
     };
     try {
       const { data } = await axios.post("/deploy-all", postData);
@@ -218,8 +218,8 @@ const DeployAll = () => {
         placeholder="Nft contract address"
         variant="filled"
         helperText="Nft contract address"
-        value={nft}
-        onChange={(e) => setNft(e.target.value)}
+        value={nftaddress}
+        onChange={(e) => setNftaddress(e.target.value)}
       />
       <br />
       <br />
