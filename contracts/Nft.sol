@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract Nft is ERC721, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
-    mapping(address => uint256[]) public ownerlist;
     Counters.Counter public _tokenIdCounter;
 
     constructor() ERC721("MyToken", "MTK") {}
@@ -18,7 +17,6 @@ contract Nft is ERC721, ERC721URIStorage, Ownable {
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-        ownerlist[to].push(tokenId);
     }
 
     function _burn(
@@ -33,11 +31,5 @@ contract Nft is ERC721, ERC721URIStorage, Ownable {
         uint256 tokenId
     ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
-    }
-
-    function NftsownedbyAddress(
-        address user
-    ) public view returns (uint256[] memory) {
-        return ownerlist[user];
     }
 }

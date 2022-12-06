@@ -146,14 +146,14 @@ contract Presale is Ownable, Pausable {
     function mint(uint256 _amountPaidStablec) external {
         // (uint256 totalAllocation, uint256 allocationEpoch) = PRESALE_ALLOCATION
         //     .allocationOf(msg.sender);
+
+        require(NFT.balanceOf(msg.sender) > 0, "you own o nfts");
         require(_amountPaidStablec > 0, "amount must be greater then zero");
         require(
             STABLEC.allowance(msg.sender, address(this)) >= _amountPaidStablec,
-            "Insufficient stablecoin allowance. Cannot unstake"
+            "Insufficient stablecoin allowance"
         );
 
-        uint256[] memory nftlist = NFT.NftsownedbyAddress(msg.sender);
-        require(nftlist.length > 0, "you own o nfts");
         // uint8 i;
         // bool k = false;
         // uint256 nftIdUsing;

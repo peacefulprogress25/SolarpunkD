@@ -23,6 +23,7 @@ const PresaleAllocation = () => {
   //This function uploads the NFT image to IPFS
   async function OnChangeFile(e) {
     var file = e.target.files[0];
+    updateMessage("Wait Mint button with be enabled after the image is uploaded to IPFS");
     //check for file extension
     try {
       //upload the file to IPFS
@@ -30,6 +31,8 @@ const PresaleAllocation = () => {
       if (response.success === true) {
         console.log("Uploaded image to Pinata: ", response.pinataURL)
         setFileURL(response.pinataURL);
+        updateMessage("image uploaded to IPFS you can mint Now");
+
       }
     }
     catch (e) {
@@ -63,34 +66,34 @@ const PresaleAllocation = () => {
 
   async function listNFT(e) {
     e.preventDefault();
+    if (typeof window.ethereum !== undefined) {
+      //Upload data to IPFS
+      try {
+        const metadataURL = await uploadMetadataToIPFS();
+        //After adding your Hardhat network to your metamask, this code will get providers and signers
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        // updateMessage("Please wait.. uploading (upto 5 mins)")
+        const tt = await signer.getAddress();
+        //Pull the deployed contract instance
+        let contract = new ethers.Contract(address, Marketplace.abi, signer)
 
-    //Upload data to IPFS
-    try {
-      const metadataURL = await uploadMetadataToIPFS();
-      //After adding your Hardhat network to your metamask, this code will get providers and signers
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      updateMessage("Please wait.. uploading (upto 5 mins)")
-      const tt = await signer.getAddress();
-      //Pull the deployed contract instance
-      let contract = new ethers.Contract(address, Marketplace.abi, signer)
-
-      //massage the params to be sent to the create NFT request
-
-
+        //massage the params to be sent to the create NFT request
 
 
-      //actually create the NFT
-      let transaction = await contract.safeMint(tt, metadataURL)
-      await transaction.wait()
 
-      alert("Successfully listed your NFT!");
-      updateMessage("");
-      updateFormParams({ name: '', description: '', price: '' });
 
-    }
-    catch (e) {
-      alert("Upload error" + e)
+        //actually create the NFT
+        let transaction = await contract.safeMint(tt, metadataURL)
+        await transaction.wait()
+
+        alert("Successfully listed your NFT!");
+        updateFormParams({ name: '', description: '', price: '' });
+
+      }
+      catch (e) {
+        alert("Upload error" + e)
+      }
     }
   }
 
@@ -155,14 +158,18 @@ const PresaleAllocation = () => {
             <br />
 
             <div>
-              <label className="block text-purple-500 text-sm font-bold mb-2" htmlFor="image">Upload Nft image</label>
+              <label className="block text-purple-500 text-sm font-bold mb-2" htmlFor="image"></label>
               <input type={"file"} onChange={OnChangeFile}></input>
             </div>
             <br></br>
             <div className="text-green text-center">{message}</div>
+            <br></br>
+            <br></br>
+            <br></br>
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={listNFT}
+              disabled={!fileURL}
             >
               Mint Nft
             </Button>
