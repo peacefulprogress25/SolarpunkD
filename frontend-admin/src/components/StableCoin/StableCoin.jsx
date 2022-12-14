@@ -45,6 +45,8 @@ const StableCoin = () => {
         console.log(allowance);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -68,6 +70,8 @@ const StableCoin = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };

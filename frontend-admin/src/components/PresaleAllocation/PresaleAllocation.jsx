@@ -15,10 +15,14 @@ import Marketplace from "./Marketplace.json";
 
 const PresaleAllocation = () => {
   const [formParams, updateFormParams] = useState({ name: '', description: '' });
+  const [updateformParams, updateUpdateFormParams] = useState({ name: '', description: '' });
   const [fileURL, setFileURL] = useState(null);
+  const [updatefileURL, setupdateFileURL] = useState(null);
   const ethers = require("ethers");
   const [message, updateMessage] = useState('');
+  const [updatemessage, updateupdateMessage] = useState('');
   const [address, setAddress] = useState('');
+  const [tokenid, setTokenid] = useState('');
 
   //This function uploads the NFT image to IPFS
   async function OnChangeFile(e) {
@@ -34,12 +38,80 @@ const PresaleAllocation = () => {
         updateMessage("image uploaded to IPFS you can mint Now");
 
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log("Error during file upload", e);
     }
   }
+  async function OnupdateChangeFile(e) {
+    var file = e.target.files[0];
+    updateupdateMessage("Wait update button with be enabled after the image is uploaded to IPFS");
+    //check for file extension
+    try {
+      //upload the file to IPFS
+      const response = await uploadFileToIPFS(file);
+      if (response.success === true) {
+        console.log("Uploaded image to Pinata: ", response.pinataURL)
+        setupdateFileURL(response.pinataURL);
+        updateupdateMessage("image uploaded to IPFS");
 
+      }
+    } catch (e) {
+      console.log("Error during file upload", e);
+    }
+  }
+  async function updateMetadataToIPFS() {
+    const { name, description } = updateformParams;
+    //Make sure that none of the fields are empty
+    if (!name || !description || !updatefileURL)
+      return;
+
+    const nftJSON = {
+      name, description, image: updatefileURL
+    }
+
+    try {
+      //upload the metadata JSON to IPFS
+      const response = await uploadJSONToIPFS(nftJSON);
+      if (response.success === true) {
+        console.log("Uploaded JSON to Pinata: ", response)
+        return response.pinataURL;
+      }
+    } catch (e) {
+      console.log("error uploading JSON metadata:", e)
+    }
+  }
+
+  async function updateuri(e) {
+    e.preventDefault();
+    if (typeof window.ethereum !== undefined) {
+      //Upload data to IPFS
+      try {
+        const metadataURL = await updateMetadataToIPFS();
+        //After adding your Hardhat network to your metamask, this code will get providers and signers
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        // updateMessage("Please wait.. uploading (upto 5 mins)")
+        const tt = await signer.getAddress();
+        //Pull the deployed contract instance
+        let contract = new ethers.Contract(address, Marketplace.abi, signer)
+
+        //massage the params to be sent to the create NFT request
+
+        //actually create the NFT
+        let transaction = await contract.updateMetaData(tokenid, metadataURL)
+        await transaction.wait()
+
+        alert("Successfully update  NFT Metadata !");
+        updateUpdateFormParams({ name: '', description: '', price: '' });
+
+      } catch (e) {
+        console.log(e);
+        alert("transaction fail this is the trxhash   " + e.transactionHash);
+
+        // alert("Upload error" + e);
+      }
+    }
+  }
   //This function uploads the metadata to IPFS
   async function uploadMetadataToIPFS() {
     const { name, description } = formParams;
@@ -58,8 +130,7 @@ const PresaleAllocation = () => {
         console.log("Uploaded JSON to Pinata: ", response)
         return response.pinataURL;
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log("error uploading JSON metadata:", e)
     }
   }
@@ -80,19 +151,18 @@ const PresaleAllocation = () => {
 
         //massage the params to be sent to the create NFT request
 
-
-
-
         //actually create the NFT
         let transaction = await contract.safeMint(tt, metadataURL)
         await transaction.wait()
 
-        alert("Successfully listed your NFT!");
+        alert("Successfully update MetaData!");
         updateFormParams({ name: '', description: '', price: '' });
 
-      }
-      catch (e) {
-        alert("Upload error" + e)
+      } catch (e) {
+        console.log(e);
+        alert("transaction fail this is the trxhash   " + e.transactionHash);
+
+        // alert("Upload error" + e);
       }
     }
   }
@@ -176,6 +246,71 @@ const PresaleAllocation = () => {
             {/* <button onClick={listNFT} className="font-bold mt-10 w-full bg-purple-500 text-white rounded p-2 shadow-lg">
               upload Nft
             </button> */}
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <Typography variant="p" style={{ fontWeight: "500" }}>
+              Nft ID to update uri of
+            </Typography>
+            <TextField
+              required
+              fullWidth
+              label="NFT Id"
+              placeholder="NFT Id"
+              variant="filled"
+              helperText="Nft Id"
+              value={tokenid}
+              onChange={e => setTokenid(e.target.value)}
+            />
+            <Typography variant="p" style={{ fontWeight: "500" }}>
+              Nft Name
+            </Typography>
+            <TextField
+              required
+              fullWidth
+              label="name"
+              placeholder="Name"
+              variant="filled"
+              helperText="Name"
+              value={updateformParams.name}
+              onChange={e => updateUpdateFormParams({ ...updateformParams, name: e.target.value })}
+            />
+            <Typography variant="p" style={{ fontWeight: "500" }}>
+              Description
+            </Typography>
+            <TextField
+              required
+              fullWidth
+              label="Description"
+              placeholder="Description"
+              variant="filled"
+              helperText="Description"
+              value={updateformParams.description}
+              onChange={e => updateUpdateFormParams({ ...updateformParams, description: e.target.value })}
+            />
+            <Typography variant="p" style={{ fontWeight: "500" }}>
+              Nft image
+            </Typography>
+            <div>
+              <label className="block text-purple-500 text-sm font-bold mb-2" htmlFor="image"></label>
+              <input type={"file"} onChange={OnupdateChangeFile}></input>
+            </div>
+            <br></br>
+            <div className="text-green text-center">{updatemessage}</div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <Button
+              style={{ backgroundColor: "#1976d2", color: "white" }}
+              onClick={updateuri}
+              disabled={!updatefileURL}
+            >
+              update Token uri
+            </Button>
+            <br />
+            <br />
           </form>
         </div>
       </div>

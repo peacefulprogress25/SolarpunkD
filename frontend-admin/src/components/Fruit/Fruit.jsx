@@ -33,6 +33,8 @@ const Fruit = () => {
         console.log(info.toString());
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -53,6 +55,8 @@ const Fruit = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };

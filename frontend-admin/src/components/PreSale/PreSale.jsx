@@ -48,6 +48,8 @@ const PreSale = () => {
         setGetData({ ...getData, Stablec: info });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -66,6 +68,8 @@ const PreSale = () => {
         setGetData({ ...getData, Treasury: info });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -84,6 +88,8 @@ const PreSale = () => {
         setGetData({ ...getData, Staking: info });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -138,6 +144,8 @@ const PreSale = () => {
         setGetData({ ...getData, UnlockTimestamp: info.toNumber() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -156,6 +164,8 @@ const PreSale = () => {
         setGetData({ ...getData, MintMultiple: info.toNumber() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -212,8 +222,10 @@ const PreSale = () => {
           Amount
         );
         console.log(info);
-      } catch ({ data }) {
-        console.log(data.message);
+      } catch (error) {
+        console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -232,6 +244,8 @@ const PreSale = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -250,6 +264,8 @@ const PreSale = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -269,6 +285,8 @@ const PreSale = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -287,6 +305,8 @@ const PreSale = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };

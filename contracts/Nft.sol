@@ -19,6 +19,11 @@ contract Nft is ERC721, ERC721URIStorage, Ownable {
         _setTokenURI(tokenId, uri);
     }
 
+    function updateMetaData(uint256 tokenId, string memory uri) public {
+        require(ownerOf(tokenId) == msg.sender, "you are not owner of nft");
+        _setTokenURI(tokenId, uri);
+    }
+
     function _burn(
         uint256 tokenId
     ) internal override(ERC721, ERC721URIStorage) {

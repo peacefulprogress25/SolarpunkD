@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+
 import { useEffect, useState } from "react";
 import { EarthTreasury as EarthTreasuryJson } from "../../abi";
 import { StableCoin as StableCoinJson } from "../../abi";
@@ -17,7 +18,6 @@ import "./SinglePage.css";
 
 const SinglePage = () => {
   const ethers = require("ethers");
-
   const [data, setData] = useState({
     addMinter: {
       address: "",
@@ -133,6 +133,8 @@ const SinglePage = () => {
       console.log(allowance);
     } catch (error) {
       console.log(error);
+      alert("transaction fail this is the trxhash   " + error.transactionHash);
+
     }
   };
 
@@ -150,6 +152,8 @@ const SinglePage = () => {
         console.log(allowance);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -173,6 +177,8 @@ const SinglePage = () => {
         );
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -193,9 +199,12 @@ const SinglePage = () => {
         const info = await contract.mint(
           price                                                             // changed 
         );
-        console.log(info);
-      } catch ({ data }) {
-        console.log(data.message);
+        await info.wait();
+
+      } catch (error) {
+        console.log(error);
+        console.log(error.transactionHash);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
       }
     }
   };
@@ -217,6 +226,8 @@ const SinglePage = () => {
         console.log(info.toString());
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -240,6 +251,8 @@ const SinglePage = () => {
         console.log(info.toString());
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -263,6 +276,8 @@ const SinglePage = () => {
         console.log(info.toString());
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -281,9 +296,14 @@ const SinglePage = () => {
         Amount,
         address
       );
+      info.wait().then((receipt) => {
+        console.log(receipt);
+      });
       console.log(info);
     } catch (error) {
       console.log(error);
+      alert("transaction fail this is the trxhash   " + error.transactionHash);
+
     }
   };
 
@@ -302,6 +322,8 @@ const SinglePage = () => {
       const info = await contract.stake(Amount);
     } catch (error) {
       console.log(error);
+      alert("transaction fail this is the trxhash   " + error.transactionHash);
+
     }
 
   };
@@ -325,6 +347,8 @@ const SinglePage = () => {
         console.log(allowance);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };

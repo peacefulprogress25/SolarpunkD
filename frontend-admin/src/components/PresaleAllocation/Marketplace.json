@@ -1,5 +1,5 @@
 {
-    "address": "0xc3fFe0B2f99672eC885DCfCb44d29710D40A4b12",
+    "address": "0x31eFf14E369289A3fEacabD4CEF027239a78e2fb",
     "abi": [
         {
             "type": "constructor",
@@ -86,25 +86,6 @@
                     "type": "uint256",
                     "name": "tokenId",
                     "indexed": true
-                }
-            ]
-        },
-        {
-            "type": "function",
-            "name": "NftsownedbyAddress",
-            "constant": true,
-            "stateMutability": "view",
-            "payable": false,
-            "gas": 1100000,
-            "inputs": [
-                {
-                    "type": "address",
-                    "name": "user"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "uint256[]"
                 }
             ]
         },
@@ -246,27 +227,6 @@
             "outputs": [
                 {
                     "type": "address"
-                }
-            ]
-        },
-        {
-            "type": "function",
-            "name": "ownerlist",
-            "constant": true,
-            "stateMutability": "view",
-            "payable": false,
-            "gas": 1100000,
-            "inputs": [
-                {
-                    "type": "address"
-                },
-                {
-                    "type": "uint256"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "uint256"
                 }
             ]
         },
@@ -447,6 +407,24 @@
                 {
                     "type": "address",
                     "name": "newOwner"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "type": "function",
+            "name": "updateMetaData",
+            "constant": false,
+            "payable": false,
+            "gas": 1100000,
+            "inputs": [
+                {
+                    "type": "uint256",
+                    "name": "tokenId"
+                },
+                {
+                    "type": "string",
+                    "name": "uri"
                 }
             ],
             "outputs": []

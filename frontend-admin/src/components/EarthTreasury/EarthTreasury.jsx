@@ -97,6 +97,8 @@ const EarthTreasury = () => {
         }
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -122,6 +124,8 @@ const EarthTreasury = () => {
         });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -142,6 +146,8 @@ const EarthTreasury = () => {
         setGetData({ ...getData, mintAllowanceAddress: info });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -167,6 +173,8 @@ const EarthTreasury = () => {
         });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -185,6 +193,8 @@ const EarthTreasury = () => {
         setGetData({ ...getData, HarvestedRewardsEarth: info.toString() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -203,6 +213,8 @@ const EarthTreasury = () => {
         setGetData({ ...getData, TotalHarvestShares: info.toString() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -221,6 +233,8 @@ const EarthTreasury = () => {
         setGetData({ ...getData, TotalAllocationStablec: info.toString() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -239,6 +253,8 @@ const EarthTreasury = () => {
         setGetData({ ...getData, NumPools: info.toString() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -264,6 +280,8 @@ const EarthTreasury = () => {
         );
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -281,6 +299,8 @@ const EarthTreasury = () => {
         await contract.harvest(distributionPercent);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -304,6 +324,8 @@ const EarthTreasury = () => {
       });
     } catch (error) {
       console.log(error);
+      alert("transaction fail this is the trxhash   " + error.transactionHash);
+
     }
   };
 
@@ -326,6 +348,8 @@ const EarthTreasury = () => {
       });
     } catch (error) {
       console.log(error);
+      alert("transaction fail this is the trxhash   " + error.transactionHash);
+
     }
   };
 
@@ -342,6 +366,8 @@ const EarthTreasury = () => {
         await contract.resetIV();
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -359,6 +385,8 @@ const EarthTreasury = () => {
         await contract.distributeHarvest();
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -376,6 +404,8 @@ const EarthTreasury = () => {
         await contract.mintAndAllocateEarth(_contract, amountEarth);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -393,6 +423,8 @@ const EarthTreasury = () => {
         await contract.unallocateAndBurnUnusedMintedEarth(_contract);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -425,6 +457,8 @@ const EarthTreasury = () => {
         );
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -442,6 +476,8 @@ const EarthTreasury = () => {
         await contract.updateMarkToMarket(_contract);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -459,6 +495,8 @@ const EarthTreasury = () => {
         await contract.withdraw(_contract);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -486,6 +524,8 @@ const EarthTreasury = () => {
         );
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -503,6 +543,8 @@ const EarthTreasury = () => {
         await contract.upsertPool(_contract, _poolHarvestShare);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -520,6 +562,8 @@ const EarthTreasury = () => {
         await contract.removePool(idx, _contract);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };

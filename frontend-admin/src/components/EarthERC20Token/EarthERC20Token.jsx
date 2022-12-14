@@ -38,6 +38,8 @@ const EarthERC20Token = () => {
         console.log(allowance);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -61,6 +63,8 @@ const EarthERC20Token = () => {
         console.log(allowance);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };

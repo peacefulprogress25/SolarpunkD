@@ -64,6 +64,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, Earth: info });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -82,6 +84,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, FRUIT: info });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -100,6 +104,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, EXIT_QUEUE: info });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -119,6 +125,8 @@ const EarthStaking = () => {
         console.log("EPY: ", info.toString());
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -137,6 +145,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, epochSizeSeconds: info.toNumber() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -155,6 +165,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, startTimestamp: info.toNumber() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -174,6 +186,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, accumulationFactor: info.toString() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -192,6 +206,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, lastUpdatedEpoch: info.toString() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -210,6 +226,8 @@ const EarthStaking = () => {
         EXIT_QUEUE();
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -238,6 +256,8 @@ const EarthStaking = () => {
         epy();
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -267,6 +287,8 @@ const EarthStaking = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -285,6 +307,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, CurrentEpoch: info.toString() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -303,6 +327,8 @@ const EarthStaking = () => {
         setGetData({ ...getData, GetAccumulationFactor: info.toNumber() });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -329,6 +355,8 @@ const EarthStaking = () => {
         });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -352,6 +380,8 @@ const EarthStaking = () => {
         });
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
@@ -372,6 +402,8 @@ const EarthStaking = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
+        alert("transaction fail this is the trxhash   " + error.transactionHash);
+
       }
     }
   };
