@@ -18,12 +18,9 @@ contract EarthStaking is Ownable {
     using ABDKMath64x64 for int128;
     EarthERC20Token public immutable EARTH; // The token being staked, for which EARTH rewards are generated
     Fruit public immutable FRUIT; // Token used to redeem staked EARTH
-    // ExitQueue public EXIT_QUEUE;    // unstake exit queue                    //
 
-    // epoch percentage yield, as an ABDKMath64x64
     int128 public epy;
 
-    // epoch size, in seconds
     uint256 public epochSizeSeconds;
 
     // The starting timestamp. from where staking starts
@@ -74,15 +71,10 @@ contract EarthStaking is Ownable {
     }
 
     /** Sets epoch percentage yield */
-    // function setExitQueue(ExitQueue _EXIT_QUEUE) external onlyOwner {
-    //     EXIT_QUEUE = _EXIT_QUEUE;
-    // }
-
-    /** Sets epoch percentage yield */
-    function setEpy(uint256 _numerator, uint256 _denominator)
-        external
-        onlyOwner
-    {
+    function setEpy(
+        uint256 _numerator,
+        uint256 _denominator
+    ) external onlyOwner {
         _updateAccumulationFactor();
         epy = ABDKMath64x64.fromUInt(1).add(
             ABDKMath64x64.divu(_numerator, _denominator)
@@ -104,11 +96,9 @@ contract EarthStaking is Ownable {
     }
 
     /** Return current accumulation factor, scaled up to account for fractional component */
-    function getAccumulationFactor(uint256 _scale)
-        external
-        view
-        returns (uint256)
-    {
+    function getAccumulationFactor(
+        uint256 _scale
+    ) external view returns (uint256) {
         return
             _accumulationFactorAt(currentEpoch())
                 .mul(ABDKMath64x64.fromUInt(_scale))
@@ -116,11 +106,9 @@ contract EarthStaking is Ownable {
     }
 
     /** Calculate the updated accumulation factor, based on the current epoch */
-    function _accumulationFactorAt(uint256 epoch)
-        private
-        view
-        returns (int128)
-    {
+    function _accumulationFactorAt(
+        uint256 epoch
+    ) private view returns (int128) {
         uint256 _nUnupdatedEpochs = epoch - lastUpdatedEpoch;
         return accumulationFactor.mul(epy.pow(_nUnupdatedEpochs));
     }
@@ -158,10 +146,10 @@ contract EarthStaking is Ownable {
     }
 
     /** Stake on behalf of a given address. Used by other contracts (like Presale) */
-    function stakeFor(address _staker, uint256 _amountEarth)
-        public
-        returns (uint256 amountFruit)
-    {
+    function stakeFor(
+        address _staker,
+        uint256 _amountEarth
+    ) public returns (uint256 amountFruit) {
         require(_amountEarth > 0, "Cannot stake 0 tokens");
 
         _updateAccumulationFactor();
@@ -184,10 +172,9 @@ contract EarthStaking is Ownable {
     }
 
     /** Stake earth */
-    function stake(uint256 _amountEarth)
-        external
-        returns (uint256 amountFruit)
-    {
+    function stake(
+        uint256 _amountEarth
+    ) external returns (uint256 amountFruit) {
         return stakeFor(msg.sender, _amountEarth);
     }
 
@@ -202,19 +189,15 @@ contract EarthStaking is Ownable {
         uint256 unstakeBalanceEarth = balance(_amountFruit);
 
         FRUIT.burnFrom(msg.sender, _amountFruit);
-        // SafeERC20.safeIncreaseAllowance(EARTH, address(EXIT_QUEUE), unstakeBalanceEarth);
-        // EXIT_QUEUE.join(msg.sender, unstakeBalanceEarth);
 
         SafeERC20.safeTransfer(EARTH, msg.sender, unstakeBalanceEarth);
 
         emit UnstakeCompleted(msg.sender, _amountFruit);
     }
 
-    function _overflowSafeMul1e18(int128 amountFixedPoint)
-        internal
-        pure
-        returns (uint256)
-    {
+    function _overflowSafeMul1e18(
+        int128 amountFixedPoint
+    ) internal pure returns (uint256) {
         uint256 integralDigits = amountFixedPoint.toUInt();
         uint256 fractionalDigits = amountFixedPoint
             .sub(ABDKMath64x64.fromUInt(integralDigits))
