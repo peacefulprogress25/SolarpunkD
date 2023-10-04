@@ -38,8 +38,9 @@ const EarthERC20Token = () => {
         console.log(allowance);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -48,7 +49,7 @@ const EarthERC20Token = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const Amount = ethers.utils.parseUnits(amount, 'ether');
+      const Amount = ethers.utils.parseUnits(amount, "ether");
 
       const contract = new ethers.Contract(
         EarthERC20TokenJson.address,
@@ -56,15 +57,13 @@ const EarthERC20Token = () => {
         signer
       );
       try {
-        const allowance = await contract.increaseAllowance(
-          address,
-          Amount
-        );
+        const allowance = await contract.increaseAllowance(address, Amount);
         console.log(allowance);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -78,17 +77,17 @@ const EarthERC20Token = () => {
         width: "500px",
       }}
     >
-      <Typography variant="h5" style={{ fontWeight: "600" }}>
+      <Typography variant='h5' style={{ fontWeight: "600" }}>
         EarthERC20Token
       </Typography>
       <Divider />
       <TextField
         required
         fullWidth
-        label="Minter Address"
-        placeholder="Minter Address"
-        variant="filled"
-        helperText="Minter Address"
+        label='Minter Address'
+        placeholder='Minter Address'
+        variant='filled'
+        helperText='Minter Address'
         value={data.addMinter.address}
         onChange={(e) =>
           setData({ ...data, addMinter: { address: e.target.value } })
@@ -108,10 +107,10 @@ const EarthERC20Token = () => {
       <TextField
         required
         fullWidth
-        label="Increase Allowance Address"
-        placeholder="Allowance Address"
-        variant="filled"
-        helperText="Increase Allowance Address"
+        label='Increase Allowance Address'
+        placeholder='Allowance Address'
+        variant='filled'
+        helperText='Increase Allowance Address'
         value={data.increaseAllowance.address}
         onChange={(e) =>
           setData({
@@ -126,10 +125,10 @@ const EarthERC20Token = () => {
       <TextField
         required
         fullWidth
-        label="Increase Allowance Amount"
-        placeholder="Allowance Amount"
-        variant="filled"
-        helperText="Increase Allowance Amount"
+        label='Increase Allowance Amount'
+        placeholder='Allowance Amount'
+        variant='filled'
+        helperText='Increase Allowance Amount'
         value={data.increaseAllowance.amount}
         onChange={(e) =>
           setData({

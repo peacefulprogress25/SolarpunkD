@@ -57,11 +57,7 @@ async function main() {
 
   // 3. EarthStaking Deployment
   const EarthStaking = await hre.ethers.getContractFactory("EarthStaking");
-  const earthStaking = await EarthStaking.deploy(
-    earthERC20Token.address,
-    epochSizeSeconds,
-    startTimestamp
-  );
+  const earthStaking = await EarthStaking.deploy();
   await earthStaking.deployed();
 
   const earthStakingData = {
@@ -80,10 +76,14 @@ async function main() {
   console.log(earthStaking.address);
 
   // 4. Fruit Deployment
-  const fruit = await earthStaking.FRUIT();
-  console.log(fruit);
+  // const fruit = await earthStaking.FRUIT();
+  // console.log(fruit);
+  const fruit = await hre.ethers.getContractFactory("Fruit");
+  const Fruit = await fruit.deploy();
+  await Fruit.deployed();
+
   const FruitData = {
-    address: fruit,
+    address: Fruit.address,
     abi: JSON.parse(
       fs.readFileSync("artifacts/contracts/Fruit.sol/Fruit.json").toString()
     ).abi,
@@ -96,6 +96,7 @@ async function main() {
     "frontend-client/src/abi/Fruit.json",
     JSON.stringify(FruitData)
   );
+  console.log(Fruit.address);
 
   // // 5. LockedFruit Deployment
   // const LockedFruit = await hre.ethers.getContractFactory("LockedFruit");
@@ -117,30 +118,27 @@ async function main() {
 
   // console.log(lockedFruit.address);
 
-  // 6. StableCoin Deployment
-  const StableCoinPreviousData = fs.readFileSync(
-    "frontend-admin/src/abi/StableCoin.json"
-  );
-  const StableCoinData = {
-    address: stableCoinAddress,
-    abi: JSON.parse(StableCoinPreviousData.toString()).abi,
-  };
-  fs.writeFileSync(
-    "frontend-admin/src/abi/StableCoin.json",
-    JSON.stringify(StableCoinData)
-  );
-  fs.writeFileSync(
-    "frontend-client/src/abi/StableCoin.json",
-    JSON.stringify(StableCoinData)
-  );
+  //! 6. StableCoin Deployment
+
+  // const StableCoin = await hre.ethers.getContractFactory("StableCoin");
+  // const stableCoin = await StableCoin.deploy();
+  // await stableCoin.deployed();
+
+  // const StableCoinData = {
+  //   address: stableCoin.address,
+  //   abi: JSON.parse(stableCoin.interface.format("json")),
+  // };
+  // fs.writeFileSync(
+  //   "frontend-admin/src/abi/StableCoin.json",
+  //   JSON.stringify(StableCoinData)
+  // );
+
+  // console.log("Stable Coin deployed to:", stableCoin.address);
   console.log(stableCoinAddress);
 
   // 7. EarthTreasury Deployment
   const EarthTreasury = await hre.ethers.getContractFactory("EarthTreasury");
-  const earthTreasury = await EarthTreasury.deploy(
-    earthERC20Token.address,
-    stableCoinAddress
-  );
+  const earthTreasury = await EarthTreasury.deploy();
   await earthTreasury.deployed();
 
   const EarthTreasuryData = {
@@ -160,25 +158,32 @@ async function main() {
   // 8. MintAllowance Deployment
   // console.log(await earthTreasury.MINT_ALLOWANCE());
 
-  const mintALLow = await earthTreasury.MINT_ALLOWANCE();
-  console.log(mintALLow);
-  const MintALLow = {
-    address: mintALLow,
+  // const mintALLow = await earthTreasury.MINT_ALLOWANCE();
+
+  const MintAllowance = await hre.ethers.getContractFactory("MintAllowance");
+  const mintAllowance = await MintAllowance.deploy(earthERC20Token.address);
+  await mintAllowance.deployed();
+
+  const MintAllowanceData = {
+    address: mintAllowance.address,
     abi: JSON.parse(
-      fs.readFileSync("artifacts/contracts/MintAllowance.sol/MintAllowance.json").toString()
-    ).abi,
+      fs
+        .readFileSync(
+          "artifacts/contracts/MintAllowance.sol/MintAllowance.json"
+        )
+        .toString()
+    ).abi, //
   };
   fs.writeFileSync(
     "frontend-admin/src/abi/MintAllowance.json",
-    JSON.stringify(MintALLow)
+    JSON.stringify(MintAllowanceData)
   );
   fs.writeFileSync(
     "frontend-client/src/abi/MintAllowance.json",
-    JSON.stringify(MintALLow)
+    JSON.stringify(MintAllowanceData)
   );
 
-
-
+  console.log(mintAllowance.address);
 
   // 9. PresaleAllocation Deployment
   // const PresaleAllocation = await hre.ethers.getContractFactory(
@@ -202,7 +207,25 @@ async function main() {
 
   // console.log(presaleAllocation.address);
 
-  // 10. Presale Deployment
+  //! 10. Presale Deployment
+
+  // const Nft = await hre.ethers.getContractFactory("SoulBound");
+  // const nft = await Nft.deploy("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512","https://google.com");
+  // await nft.deployed();
+  // nftdata = {
+  //     address: nft.address,
+  //     abi: JSON.parse(nft.interface.format("json")),
+  // };
+  // fs.writeFileSync(
+  //     "frontend-admin/src/abi/SoulBound.json",
+  //     JSON.stringify(nftdata)
+  // );
+  // fs.writeFileSync(
+  //     "frontend-client/src/abi/SoulBound.json",
+  //     JSON.stringify(nftdata)
+  // );
+  // console.log("Solbound :", nft.address);
+
   const PRESALE = await hre.ethers.getContractFactory("Presale");
   const preSALE = await PRESALE.deploy(
     stableCoinAddress,
@@ -230,24 +253,7 @@ async function main() {
   );
 
   console.log(preSALE.address);
-
-  const nftData = fs.readFileSync(
-    "frontend-admin/src/abi/Nft.json"
-  );
-  const NftData = {
-    address: nftcontractaddress,
-    abi: JSON.parse(nftData.toString()).abi,
-  };
-
-  fs.writeFileSync(
-    "frontend-admin/src/abi/Nft.json",
-    JSON.stringify(NftData)
-  );
-  fs.writeFileSync(
-    "frontend-client/src/abi/Nft.json",
-    JSON.stringify(NftData)
-  );
-  console.log(NftData.address);
+  console.log(nftcontractaddress);
 }
 
 main()

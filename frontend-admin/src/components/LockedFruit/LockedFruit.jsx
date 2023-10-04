@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
-import { LockedFruit as LockedFruitJson } from "../../abi";
+// import { LockedFruit as LockedFruitJson } from "../../abi";
 import CssBaseline from "@mui/material/CssBaseline";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -26,99 +26,99 @@ const LockedFruit = () => {
 
   // Get lockedFruitJson address
   useEffect(() => {
-    LockedFruitJson.address = JSON.parse(
-      localStorage.getItem("addresses")
-    ).LockedFruit;
+    // LockedFruitJson.address = JSON.parse(
+    //   localStorage.getItem("addresses")
+    // ).LockedFruit;
   }, []);
 
-  const numLocks = async (_staker) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        LockedFruitJson.address,
-        LockedFruitJson.abi,
-        signer
-      );
-      try {
-        const info = await contract.numLocks(_staker);
-        setGetData({
-          ...getData,
-          numLocks: { ...getData.numLocks, locks: info.toString() },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const numLocks = async (_staker) => {
+  //   if (typeof window.ethereum !== "undefined") {
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     const signer = provider.getSigner();
+  //     const contract = new ethers.Contract(
+  //       LockedFruitJson.address,
+  //       LockedFruitJson.abi,
+  //       signer
+  //     );
+  //     try {
+  //       const info = await contract.numLocks(_staker);
+  //       setGetData({
+  //         ...getData,
+  //         numLocks: { ...getData.numLocks, locks: info.toString() },
+  //       });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const lockFor = async (_staker, _amountFruit, _lockedUntilTimestamp) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        LockedFruitJson.address,
-        LockedFruitJson.abi,
-        signer
-      );
-      try {
-        await contract.lockFor(_staker, _amountFruit, _lockedUntilTimestamp);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const lockFor = async (_staker, _amountFruit, _lockedUntilTimestamp) => {
+  //   if (typeof window.ethereum !== "undefined") {
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     const signer = provider.getSigner();
+  //     const contract = new ethers.Contract(
+  //       LockedFruitJson.address,
+  //       LockedFruitJson.abi,
+  //       signer
+  //     );
+  //     try {
+  //       await contract.lockFor(_staker, _amountFruit, _lockedUntilTimestamp);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const lock = async (_amountFruit, _lockedUntilTimestamp) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        LockedFruitJson.address,
-        LockedFruitJson.abi,
-        signer
-      );
-      try {
-        await contract.lock(_amountFruit, _lockedUntilTimestamp);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const lock = async (_amountFruit, _lockedUntilTimestamp) => {
+  //   if (typeof window.ethereum !== "undefined") {
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     const signer = provider.getSigner();
+  //     const contract = new ethers.Contract(
+  //       LockedFruitJson.address,
+  //       LockedFruitJson.abi,
+  //       signer
+  //     );
+  //     try {
+  //       await contract.lock(_amountFruit, _lockedUntilTimestamp);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const withdrawFor = async (_staker, _idx) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        LockedFruitJson.address,
-        LockedFruitJson.abi,
-        signer
-      );
-      try {
-        await contract.withdrawFor(_staker, _idx);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const withdrawFor = async (_staker, _idx) => {
+  //   if (typeof window.ethereum !== "undefined") {
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     const signer = provider.getSigner();
+  //     const contract = new ethers.Contract(
+  //       LockedFruitJson.address,
+  //       LockedFruitJson.abi,
+  //       signer
+  //     );
+  //     try {
+  //       await contract.withdrawFor(_staker, _idx);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const withdraw = async (_idx) => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        LockedFruitJson.address,
-        LockedFruitJson.abi,
-        signer
-      );
-      try {
-        await contract.withdraw(_idx);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const withdraw = async (_idx) => {
+  //   if (typeof window.ethereum !== "undefined") {
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     const signer = provider.getSigner();
+  //     const contract = new ethers.Contract(
+  //       LockedFruitJson.address,
+  //       LockedFruitJson.abi,
+  //       signer
+  //     );
+  //     try {
+  //       await contract.withdraw(_idx);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   return (
     <div
@@ -130,17 +130,17 @@ const LockedFruit = () => {
       }}
     >
       <CssBaseline />
-      <Typography variant="h5" style={{ fontWeight: "600" }}>
+      <Typography variant='h5' style={{ fontWeight: "600" }}>
         LockedFruit
       </Typography>
       <Divider />
       <TextField
         required
         fullWidth
-        label="Wallet Address"
-        placeholder="Wallet Address"
-        variant="filled"
-        helperText="Staker"
+        label='Wallet Address'
+        placeholder='Wallet Address'
+        variant='filled'
+        helperText='Staker'
         value={getData.numLocks.address}
         onChange={(e) =>
           setGetData({
@@ -152,22 +152,22 @@ const LockedFruit = () => {
       <br />
       <Button
         style={{ backgroundColor: "#1976d2", color: "white" }}
-        onClick={() => numLocks(getData.numLocks.address)}
+        // onClick={() => numLocks(getData.numLocks.address)}
       >
         NumLocks
       </Button>
       {getData.numLocks.locks ? `Num Locks: ${getData.numLocks.locks}` : null}
       <Divider />
-      <Typography variant="h6" style={{ fontWeight: 600 }}>
+      <Typography variant='h6' style={{ fontWeight: 600 }}>
         Set Functions
       </Typography>
       <TextField
         required
         fullWidth
-        label="Lock For Address"
-        placeholder="Lock For Address"
-        variant="filled"
-        helperText="Lock For Address"
+        label='Lock For Address'
+        placeholder='Lock For Address'
+        variant='filled'
+        helperText='Lock For Address'
         value={data.lockFor.address}
         onChange={(e) =>
           setData({
@@ -179,10 +179,10 @@ const LockedFruit = () => {
       <TextField
         required
         fullWidth
-        label="Lock For Amount Locked Fruit"
-        placeholder="Lock For Amount Locked Fruit"
-        variant="filled"
-        helperText="Lock For Amount Locked Fruit"
+        label='Lock For Amount Locked Fruit'
+        placeholder='Lock For Amount Locked Fruit'
+        variant='filled'
+        helperText='Lock For Amount Locked Fruit'
         value={data.lockFor.amountFruit}
         onChange={(e) =>
           setData({
@@ -195,10 +195,10 @@ const LockedFruit = () => {
       <TextField
         required
         fullWidth
-        label="Lock For LockedUntilTimestamp"
-        placeholder="Lock For LockedUntilTimestamp"
-        variant="filled"
-        helperText="Lock For LockedUntilTimestamp"
+        label='Lock For LockedUntilTimestamp'
+        placeholder='Lock For LockedUntilTimestamp'
+        variant='filled'
+        helperText='Lock For LockedUntilTimestamp'
         value={data.lockFor.lockedUntilTimestamp}
         onChange={(e) =>
           setData({
@@ -209,13 +209,13 @@ const LockedFruit = () => {
       />
       <Button
         style={{ backgroundColor: "#1976d2", color: "white" }}
-        onClick={() =>
-          lockFor(
-            data.lockFor.address,
-            data.lockFor.amountFruit,
-            data.lockFor.lockedUntilTimestamp
-          )
-        }
+        // onClick={() =>
+        //   lockFor(
+        //     data.lockFor.address,
+        //     data.lockFor.amountFruit,
+        //     data.lockFor.lockedUntilTimestamp
+        //   )
+        // }
       >
         Lock-For
       </Button>
@@ -223,10 +223,10 @@ const LockedFruit = () => {
       <TextField
         required
         fullWidth
-        label="Lock Amount Fruit"
-        placeholder="Lock Amount Fruit"
-        variant="filled"
-        helperText="Lock Amount Fruit"
+        label='Lock Amount Fruit'
+        placeholder='Lock Amount Fruit'
+        variant='filled'
+        helperText='Lock Amount Fruit'
         value={data.lock.amountFruit}
         onChange={(e) =>
           setData({
@@ -238,10 +238,10 @@ const LockedFruit = () => {
       <TextField
         required
         fullWidth
-        label="Lock Until Timestamp"
-        placeholder="Lock Until Timestamp"
-        variant="filled"
-        helperText="Lock Until Timestamp"
+        label='Lock Until Timestamp'
+        placeholder='Lock Until Timestamp'
+        variant='filled'
+        helperText='Lock Until Timestamp'
         value={data.lock.lockedUntilTimestamp}
         onChange={(e) =>
           setData({
@@ -252,9 +252,9 @@ const LockedFruit = () => {
       />
       <Button
         style={{ backgroundColor: "#1976d2", color: "white" }}
-        onClick={() =>
-          lock(data.lock.amountFruit, data.lock.lockedUntilTimestamp)
-        }
+        // onClick={() =>
+        //   lock(data.lock.amountFruit, data.lock.lockedUntilTimestamp)
+        // }
       >
         Lock
       </Button>
@@ -262,10 +262,10 @@ const LockedFruit = () => {
       <TextField
         required
         fullWidth
-        label="Withdraw address"
-        placeholder="Withdraw address"
-        variant="filled"
-        helperText="Withdraw address"
+        label='Withdraw address'
+        placeholder='Withdraw address'
+        variant='filled'
+        helperText='Withdraw address'
         value={data.withdrawFor.staker}
         onChange={(e) =>
           setData({
@@ -277,10 +277,10 @@ const LockedFruit = () => {
       <TextField
         required
         fullWidth
-        label="Withdraw idx"
-        placeholder="Withdraw idx"
-        variant="filled"
-        helperText="Withdraw idx"
+        label='Withdraw idx'
+        placeholder='Withdraw idx'
+        variant='filled'
+        helperText='Withdraw idx'
         value={data.withdrawFor.idx}
         onChange={(e) =>
           setData({
@@ -291,9 +291,9 @@ const LockedFruit = () => {
       />
       <Button
         style={{ backgroundColor: "#1976d2", color: "white" }}
-        onClick={() =>
-          withdrawFor(data.withdrawFor.staker, data.withdrawFor.idx)
-        }
+        // onClick={() =>
+        //   withdrawFor(data.withdrawFor.staker, data.withdrawFor.idx)
+        // }
       >
         Withdraw-For
       </Button>
@@ -301,10 +301,10 @@ const LockedFruit = () => {
       <TextField
         required
         fullWidth
-        label="Locked Address"
-        placeholder="Locked Address"
-        variant="filled"
-        helperText="Locked Address"
+        label='Locked Address'
+        placeholder='Locked Address'
+        variant='filled'
+        helperText='Locked Address'
         value={data.withdraw.index}
         onChange={(e) =>
           setData({
@@ -319,7 +319,7 @@ const LockedFruit = () => {
           color: "white",
           marginBottom: "30px",
         }}
-        onClick={() => withdraw(data.withdraw.index)}
+        // onClick={() => withdraw(data.withdraw.index)}
       >
         Withdraw
       </Button>

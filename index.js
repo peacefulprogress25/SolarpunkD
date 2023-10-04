@@ -11,7 +11,7 @@ const {
   presale: { mintMultiple },
   stableCoin: stableCoinAddress,
   nftaddress: nftcontractaddress,
-} = require("./scripts//deployParameters.json");
+} = require("./scripts/deployParameters.json");
 
 const StableCoinData = {
   address: stableCoinAddress,
@@ -56,7 +56,6 @@ app.post("/deploy-all", async (req, res) => {
         // PresaleAllocation: result[5],
         Presale: result[6],
         Nft: result[7],
-
       })
     );
   });

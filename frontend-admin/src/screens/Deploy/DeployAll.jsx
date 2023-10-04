@@ -17,7 +17,7 @@ const DeployAll = () => {
   // });
   const [earthStaking, setEarthStaking] = useState({
     epochSizeSeconds: "86400",
-    startTimestamp: "",
+    // startTimestamp: "",
   });
   const [presale, setPresale] = useState({
     mintMultiple: "",
@@ -26,7 +26,6 @@ const DeployAll = () => {
   const [stableCoin, setStableCoin] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [nftaddress, setNftaddress] = useState("");
-
 
   const deploy = async () => {
     setisLoading(true);
@@ -71,10 +70,10 @@ const DeployAll = () => {
   const setpresaleMintMultiple = (value) => {
     setMintMultiple(value);
 
-    let t = (parseFloat(value)) * 10;
+    let t = parseFloat(value) * 10;
 
     setPresale({ ...presale, mintMultiple: t });
-  }
+  };
 
   return (
     <div
@@ -86,7 +85,7 @@ const DeployAll = () => {
       }}
     >
       <CssBaseline />
-      <Typography variant="h5" style={{ fontWeight: "800" }}>
+      <Typography variant='h5' style={{ fontWeight: "800" }}>
         Deploy All Contracts
       </Typography>
       {/* 
@@ -131,16 +130,16 @@ const DeployAll = () => {
           setExitQueue({ ...exitQueue, epochSize: e.target.value })
         }
       /> */}
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         EarthStaking
       </Typography>
       <TextField
         required
         fullWidth
-        label="Epoch size seconds"
-        placeholder="Epoch size seconds"
-        variant="filled"
-        helperText="Epoch size seconds"
+        label='Epoch size seconds'
+        placeholder='Epoch size seconds'
+        variant='filled'
+        helperText='Epoch size seconds'
         value={earthStaking.epochSizeSeconds}
         onChange={(e) =>
           setEarthStaking({
@@ -152,30 +151,28 @@ const DeployAll = () => {
 
       <br />
       <br />
-      <DatePicker label="Start timestamp" change={handleStartTimestampChange} />
-      <p variant="p" style={{ fontWeight: "200", fontSize: "12px" }}>
+      {/* <DatePicker label="Start timestamp" change={handleStartTimestampChange} /> */}
+      <p variant='p' style={{ fontWeight: "200", fontSize: "12px" }}>
         {earthStaking.startTimestamp
           ? `Epoch: ${earthStaking.startTimestamp}, Local: ${new Date(
-            earthStaking.startTimestamp * 1000
-          ).toLocaleString()}`
+              earthStaking.startTimestamp * 1000
+            ).toLocaleString()}`
           : ""}
       </p>
       <br />
 
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         Presale
       </Typography>
       <TextField
         required
         fullWidth
-        label="Mint multiple"
-        placeholder="Mint multiple 1.2 ,1.3 etc"
-        variant="filled"
-        helperText="Mint multiple 1.2,1.3 etc"
+        label='Mint multiple'
+        placeholder='Mint multiple 1.2 ,1.3 etc'
+        variant='filled'
+        helperText='Mint multiple 1.2,1.3 etc'
         value={mintMultiple}
-        onChange={(e) =>
-          setpresaleMintMultiple(e.target.value)
-        }
+        onChange={(e) => setpresaleMintMultiple(e.target.value)}
       />
 
       <br />
@@ -192,32 +189,32 @@ const DeployAll = () => {
           : ""}
       </p> */}
       <br />
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         Stable Coin
       </Typography>
       <TextField
         required
         fullWidth
-        label="Stable Coin contract address"
-        placeholder="Stable Coin contract address"
-        variant="filled"
-        helperText="Stable Coin contract address"
+        label='Stable Coin contract address'
+        placeholder='Stable Coin contract address'
+        variant='filled'
+        helperText='Stable Coin contract address'
         value={stableCoin}
         onChange={(e) => setStableCoin(e.target.value)}
       />
       <br />
       <br />
       <br />
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         Nft
       </Typography>
       <TextField
         required
         fullWidth
-        label="Nft contract address"
-        placeholder="Nft contract address"
-        variant="filled"
-        helperText="Nft contract address"
+        label='Nft contract address'
+        placeholder='Nft contract address'
+        variant='filled'
+        helperText='Nft contract address'
         value={nftaddress}
         onChange={(e) => setNftaddress(e.target.value)}
       />
@@ -230,7 +227,7 @@ const DeployAll = () => {
         DeployAll
       </Button>
       {isLoading ? (
-        <Loader type="ThreeDots" color="#1976d2" height={80} width={80} />
+        <Loader type='ThreeDots' color='#1976d2' height={80} width={80} />
       ) : null}
     </div>
   );

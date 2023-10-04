@@ -33,8 +33,9 @@ const Fruit = () => {
         console.log(info.toString());
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -43,7 +44,7 @@ const Fruit = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const Amount = ethers.utils.parseUnits(amount, 'ether');
+      const Amount = ethers.utils.parseUnits(amount, "ether");
 
       const contract = new ethers.Contract(
         FruitJson.address,
@@ -55,8 +56,9 @@ const Fruit = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -70,21 +72,21 @@ const Fruit = () => {
       }}
     >
       <CssBaseline />
-      <Typography variant="h5" style={{ fontWeight: "600" }}>
+      <Typography variant='h5' style={{ fontWeight: "600" }}>
         Fruit
       </Typography>
       <Divider />
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         Allowance
       </Typography>
 
       <TextField
         required
         fullWidth
-        label="Wallet Address"
-        placeholder="Wallet Address"
-        variant="filled"
-        helperText="Wallet Address"
+        label='Wallet Address'
+        placeholder='Wallet Address'
+        variant='filled'
+        helperText='Wallet Address'
         value={earth.walletAddress}
         onChange={(e) => setEarth({ ...earth, walletAddress: e.target.value })}
       />
@@ -93,10 +95,10 @@ const Fruit = () => {
       <TextField
         required
         fullWidth
-        label="Staking Address"
-        placeholder="Staking Address"
-        variant="filled"
-        helperText="Staking Address"
+        label='Staking Address'
+        placeholder='Staking Address'
+        variant='filled'
+        helperText='Staking Address'
         value={earth.stakingAddress}
         onChange={(e) => setEarth({ ...earth, stakingAddress: e.target.value })}
       />
@@ -108,17 +110,17 @@ const Fruit = () => {
         Allow
       </Button>
       <Divider />
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         Increase Allowance
       </Typography>
 
       <TextField
         required
         fullWidth
-        label="Staking Address"
-        placeholder="Staking Address"
-        variant="filled"
-        helperText="Staking Address"
+        label='Staking Address'
+        placeholder='Staking Address'
+        variant='filled'
+        helperText='Staking Address'
         value={earth.stakingAddress}
         onChange={(e) => setEarth({ ...earth, stakingAddress: e.target.value })}
       />
@@ -127,10 +129,10 @@ const Fruit = () => {
       <TextField
         required
         fullWidth
-        label="Increase Amount"
-        placeholder="Increase Amount"
-        variant="filled"
-        helperText="Increase Amount"
+        label='Increase Amount'
+        placeholder='Increase Amount'
+        variant='filled'
+        helperText='Increase Amount'
         value={earth.increasedAmount}
         onChange={(e) =>
           setEarth({ ...earth, increasedAmount: e.target.value })
