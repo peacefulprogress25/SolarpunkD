@@ -34,7 +34,7 @@ const DeployAll = () => {
       // !exitQueue.maxPerAddress ||
       // !exitQueue.epochSize ||
       !earthStaking.epochSizeSeconds ||
-      !earthStaking.startTimestamp ||
+      // !earthStaking.startTimestamp ||
       !presale.mintMultiple ||
       // !presale.unlockTimestamp ||
       !stableCoin ||
