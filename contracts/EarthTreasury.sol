@@ -74,6 +74,7 @@ contract EarthTreasury is OwnableUpgradeable {
         _EARTH = _earth;
         _STABLEC = _stablec;
         MINT_ALLOWANCE = new MintAllowance(_EARTH);
+        __Ownable_init();
     }
 
     function numPools() external view returns (uint256) {
