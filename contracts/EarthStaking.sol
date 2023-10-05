@@ -56,17 +56,17 @@ contract EarthStaking is Initializable, OwnableUpgradeable {
         uint256 _epochSizeSeconds,
         uint256 _startTimestamp
     ) public initializer {
-        if (_startTimestamp >= block.timestamp) {
-            revert StartTimestampNotInPast();
-        }
+        // if (_startTimestamp >= block.timestamp) {
+        //     revert StartTimestampNotInPast();
+        // }
 
-        if (_startTimestamp <= (block.timestamp - 2 days)) {
-            revert StartTimestampTooEarly();
-        }
+        // if (_startTimestamp <= (block.timestamp - 2 days)) {
+        //     revert StartTimestampTooEarly();
+        // }
 
-        if (address(_EARTH) == address(0)) {
-            revert ZERO_ADDRESS();
-        }
+        // if (address(_EARTH) == address(0)) {
+        //     revert ZERO_ADDRESS();
+        // }
 
         EARTH = _EARTH;
 
