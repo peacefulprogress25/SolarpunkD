@@ -2,6 +2,7 @@ require("@nomiclabs/hardhat-waffle");
 require("dotenv").config();
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-web3");
+require("@openzeppelin/hardhat-upgrades");
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -33,4 +34,10 @@ module.exports = {
       gasPrice: 8000000000,
     },
   },
+  etherscan: {
+    apiKey: {
+      mainnet: process.env.MATICSCAN_API_KEY,
+      "polygonMumbai": process.env.MATICSCAN_API_KEY,
+    }
+  }
 };
