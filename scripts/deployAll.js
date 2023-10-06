@@ -157,7 +157,7 @@ async function main() {
 
   const presaleData = {
     address: PRESALE.target,
-    abi:JSON.parse(fs.readFileSync("artifacts/contracts/PRESALE.sol/PRESALE.json").toString()).abi,
+    abi:JSON.parse(fs.readFileSync("artifacts/contracts/Presale.sol/Presale.json").toString()).abi,
   };
   fs.writeFileSync(
     "frontend-admin/src/abi/Presale.json",
