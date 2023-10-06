@@ -17,7 +17,7 @@ const DeployAll = () => {
   // });
   const [earthStaking, setEarthStaking] = useState({
     epochSizeSeconds: "86400",
-    // startTimestamp: "",
+    startTimestamp: "",
   });
   const [presale, setPresale] = useState({
     mintMultiple: "",
@@ -34,7 +34,7 @@ const DeployAll = () => {
       // !exitQueue.maxPerAddress ||
       // !exitQueue.epochSize ||
       !earthStaking.epochSizeSeconds ||
-      // !earthStaking.startTimestamp ||
+       !earthStaking.startTimestamp ||
       !presale.mintMultiple ||
       // !presale.unlockTimestamp ||
       !stableCoin ||
@@ -88,7 +88,7 @@ const DeployAll = () => {
       <Typography variant='h5' style={{ fontWeight: "800" }}>
         Deploy All Contracts
       </Typography>
-      {/* 
+      {/*
       <Typography variant="p" style={{ fontWeight: "500" }}>
         ExitQueue
       </Typography>
@@ -151,7 +151,7 @@ const DeployAll = () => {
 
       <br />
       <br />
-      {/* <DatePicker label="Start timestamp" change={handleStartTimestampChange} /> */}
+      <DatePicker label="Start timestamp" change={handleStartTimestampChange} />
       <p variant='p' style={{ fontWeight: "200", fontSize: "12px" }}>
         {earthStaking.startTimestamp
           ? `Epoch: ${earthStaking.startTimestamp}, Local: ${new Date(
