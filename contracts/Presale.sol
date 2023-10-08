@@ -3,8 +3,10 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 import "./EarthERC20Token.sol";
 import "./EarthTreasury.sol";
@@ -18,7 +20,7 @@ error MUST_OWN_NFT();
 /**
  * Presale campaign, which lets users mint and stake based on current IV and a whitelist
  */
-contract Presale is Ownable, Pausable {
+contract Presale is PausableUpgradeable, OwnableUpgradeable {
     IERC20 public STABLEC; // STABLEC contract address
     EarthERC20Token public EARTH; // EARTH ERC20 contract
     EarthTreasury public TREASURY;
@@ -29,7 +31,7 @@ contract Presale is Ownable, Pausable {
     uint256 public mintMultiple;
 
     // Decimal mint multiple
-    uint256 public decimalMintMultiple = 10;
+    //uint256 public decimalMintMultiple = 10;
 
     event MintComplete(
         address indexed minter,
@@ -47,14 +49,14 @@ contract Presale is Ownable, Pausable {
 
     mapping(uint256 => bool) public mintedRecord;
 
-    constructor(
+    function initialize(
         IERC20 _STABLEC,
         EarthERC20Token _EARTH,
         EarthStaking _STAKING,
         EarthTreasury _TREASURY,
         uint256 _mintMultiple,
         SoulBound _SOULBOUND
-    ) {
+    ) public initializer {
         if (
             address(_STABLEC) == address(0) ||
             address(_EARTH) == address(0) ||
@@ -71,6 +73,7 @@ contract Presale is Ownable, Pausable {
         TREASURY = _TREASURY;
         mintMultiple = _mintMultiple;
         SOULBOUND = _SOULBOUND;
+        __Ownable_init();
     }
 
     function updateNftAddress(SoulBound _SOULBOUND) external onlyOwner {
