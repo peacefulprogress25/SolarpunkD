@@ -197,6 +197,7 @@ const SinglePage = () => {
         const info = await contract.mint(
           price // changed
         );
+
         await info.wait();
       } catch (error) {
         console.log(error);
@@ -302,7 +303,7 @@ const SinglePage = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const Amount = ethers.utils.parseUnits(amount, "ether");
-
+    console.log(EarthStakingJson.address, amount, EarthStakingJson.abi);
     const contract = new ethers.Contract(
       EarthStakingJson.address,
       EarthStakingJson.abi,
@@ -514,7 +515,7 @@ const SinglePage = () => {
 
         <Button
           style={{ backgroundColor: "#1976d2", color: "white" }}
-          // onClick={() => addMinter(mintStake.addMinterAddress)}
+          onClick={() => addMinter(mintStake.addMinterAddress)}
         >
           Adding presale as Minter to EarthERC20
         </Button>
@@ -638,12 +639,12 @@ const SinglePage = () => {
             color: "white",
             marginBottom: "30px",
           }}
-          // onClick={() =>
-          //   increaseAllowanceearth(
-          //     EarthStakingJson.address,
-          //     data.increaseAllowance.amount
-          //   )
-          // }
+          onClick={() =>
+            increaseAllowanceearth(
+              EarthStakingJson.address,
+              data.increaseAllowance.amount
+            )
+          }
         >
           Increase-Allowance
         </Button>

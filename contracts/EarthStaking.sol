@@ -54,7 +54,8 @@ contract EarthStaking is Initializable, OwnableUpgradeable {
     function initialize(
         EarthERC20Token _EARTH,
         uint256 _epochSizeSeconds,
-        uint256 _startTimestamp
+        uint256 _startTimestamp,
+        Fruit _Fruit
     ) public initializer {
         if (_startTimestamp >= block.timestamp) {
             revert StartTimestampNotInPast();
@@ -72,7 +73,7 @@ contract EarthStaking is Initializable, OwnableUpgradeable {
 
         // Each version of the staking contract needs it's own instance of Fruit users can use to
         // claim back rewards
-        FRUIT = new Fruit();
+        FRUIT = _Fruit;
         epochSizeSeconds = _epochSizeSeconds;
         startTimestamp = _startTimestamp;
         epy = ABDKMath64x64.fromUInt(1);

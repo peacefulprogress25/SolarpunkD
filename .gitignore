@@ -11,3 +11,4 @@ scripts/deployParameters.json
 scripts/deployAddresses.json
 scripts/harvestParameters.json
 scripts/setAllocatorsParameters.json
+.openzeppelin
