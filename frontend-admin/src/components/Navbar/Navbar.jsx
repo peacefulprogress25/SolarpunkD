@@ -14,7 +14,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 });
 
 const Navbar = () => {
@@ -93,16 +93,16 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="fixed" style={{ height: "85px" }}>
-      <Container maxWidth="xl">
+    <AppBar position='fixed' style={{ height: "85px" }}>
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Typography
             onClick={() => {
               window.location.href = "/";
             }}
-            variant="h6"
+            variant='h6'
             noWrap
-            component="div"
+            component='div'
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -113,9 +113,9 @@ const Navbar = () => {
           </Typography>
 
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="div"
+            component='div'
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
             EARTHCOIN
@@ -164,12 +164,20 @@ const Navbar = () => {
                 >
                   MULTI PAGE
                 </Button>
+                <Button
+                  onClick={() => {
+                    window.location.href = "/claim-nft";
+                  }}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  CLAIM
+                </Button>
               </>
             ) : null}
           </Box>
           <Box sx={{ flexGrow: 1, display: "flex" }}>
             <Menu
-              id="menu-appbar"
+              id='menu-appbar'
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
@@ -198,28 +206,28 @@ const Navbar = () => {
                   window.location.href = "/earth-staking";
                 }}
               >
-                <Typography textAlign="center">EARTH-STAKING</Typography>
+                <Typography textAlign='center'>EARTH-STAKING</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   window.location.href = "/pre-sale";
                 }}
               >
-                <Typography textAlign="center">PRE-SALE</Typography>
+                <Typography textAlign='center'>PRE-SALE</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   window.location.href = "/earth-treasury";
                 }}
               >
-                <Typography textAlign="center">EARTH-TREASURY</Typography>
+                <Typography textAlign='center'>EARTH-TREASURY</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   window.location.href = "/presale-allocation";
                 }}
               >
-                <Typography textAlign="center">NFt-mint</Typography>
+                <Typography textAlign='center'>NFt-mint</Typography>
               </MenuItem>
 
               {/* <MenuItem
@@ -234,21 +242,21 @@ const Navbar = () => {
                   window.location.href = "/earth-erc20token";
                 }}
               >
-                <Typography textAlign="center">EARTH-ERC20TOKEN</Typography>
+                <Typography textAlign='center'>EARTH-ERC20TOKEN</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   window.location.href = "/stable-coin";
                 }}
               >
-                <Typography textAlign="center">STABLE-COIN</Typography>
+                <Typography textAlign='center'>STABLE-COIN</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   window.location.href = "/fruit";
                 }}
               >
-                <Typography textAlign="center">FRUIT</Typography>
+                <Typography textAlign='center'>FRUIT</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -264,36 +272,36 @@ const Navbar = () => {
           >
             <button
               onClick={walletConnection}
-              className="connect-button"
+              className='connect-button'
               style={
                 walletAddress
                   ? {
-                    backgroundColor: "red",
-                    color: "white",
-                    cursor: "pointer",
-                    outline: "none",
-                    border: "none",
-                    height: "30px",
-                    width: "100px",
-                    margin: "10px 0",
-                  }
+                      backgroundColor: "red",
+                      color: "white",
+                      cursor: "pointer",
+                      outline: "none",
+                      border: "none",
+                      height: "30px",
+                      width: "100px",
+                      margin: "10px 0",
+                    }
                   : {
-                    backgroundColor: "green",
-                    color: "white",
-                    cursor: "pointer",
-                    outline: "none",
-                    border: "none",
-                    height: "30px",
-                    width: "100px",
-                    margin: "10px 0",
-                  }
+                      backgroundColor: "green",
+                      color: "white",
+                      cursor: "pointer",
+                      outline: "none",
+                      border: "none",
+                      height: "30px",
+                      width: "100px",
+                      margin: "10px 0",
+                    }
               }
             >
               {walletAddress ? "DISCONNECT" : "CONNECT"}
             </button>
             <div style={{ display: "flex", flexDirection: "row-reverse" }}>
               {walletAddress ? (
-                <Typography variant="subtitle" style={{ marginRight: "15vw" }}>
+                <Typography variant='subtitle' style={{ marginRight: "15vw" }}>
                   {walletAddress}
                 </Typography>
               ) : null}
@@ -313,7 +321,7 @@ const Navbar = () => {
               >
                 <Alert
                   onClose={handleClose}
-                  severity="success"
+                  severity='success'
                   sx={{ width: "100%" }}
                 >
                   Account copied successfully!

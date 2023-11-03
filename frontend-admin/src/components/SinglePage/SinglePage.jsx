@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-
+import { Claim as claimJson } from "../../abi";
 import { useEffect, useState } from "react";
 import { EarthTreasury as EarthTreasuryJson } from "../../abi";
 import { StableCoin as StableCoinJson } from "../../abi";
@@ -110,6 +110,25 @@ const SinglePage = () => {
   useEffect(() => {
     FruitJson.address = JSON.parse(localStorage.getItem("addresses")).Fruit;
   }, []);
+
+  const claimTokensFn = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+    const contract = new ethers.Contract(
+      claimJson.address,
+      claimJson.abi,
+      signer
+    );
+    try {
+      console.log("Contract: ", contract);
+      const result = await contract.claimTokens();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+      alert("transaction fail this is the trxhash   " + error.transactionHash);
+    }
+  };
 
   // Seed Mint
   const increaseAllowance = async (address, amount) => {
@@ -739,6 +758,16 @@ const SinglePage = () => {
         >
           Unstake earthtoken
         </Button>
+        <br />
+
+        <p className='steps'>Claim</p>
+        <Button
+          style={{ backgroundColor: "#1976d2", color: "white" }}
+          onClick={claimTokensFn}
+        >
+          Claim
+        </Button>
+        <br />
         <br />
       </>
     </div>

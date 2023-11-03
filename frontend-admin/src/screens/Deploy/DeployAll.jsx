@@ -26,6 +26,7 @@ const DeployAll = () => {
   const [stableCoin, setStableCoin] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [nftaddress, setNftaddress] = useState("");
+  const [claimAddress, setClaimAddress] = useState("");
 
   const deploy = async () => {
     setisLoading(true);
@@ -34,11 +35,12 @@ const DeployAll = () => {
       // !exitQueue.maxPerAddress ||
       // !exitQueue.epochSize ||
       !earthStaking.epochSizeSeconds ||
-       !earthStaking.startTimestamp ||
+      !earthStaking.startTimestamp ||
       !presale.mintMultiple ||
       // !presale.unlockTimestamp ||
       !stableCoin ||
-      !nftaddress
+      !nftaddress ||
+      !claimAddress
     ) {
       setisLoading(false);
       return;
@@ -49,6 +51,7 @@ const DeployAll = () => {
       presale,
       stableCoin,
       nftaddress,
+      claimAddress,
     };
     try {
       const { data } = await axios.post("/deploy-all", postData);
@@ -151,7 +154,7 @@ const DeployAll = () => {
 
       <br />
       <br />
-      <DatePicker label="Start timestamp" change={handleStartTimestampChange} />
+      <DatePicker label='Start timestamp' change={handleStartTimestampChange} />
       <p variant='p' style={{ fontWeight: "200", fontSize: "12px" }}>
         {earthStaking.startTimestamp
           ? `Epoch: ${earthStaking.startTimestamp}, Local: ${new Date(
@@ -217,6 +220,21 @@ const DeployAll = () => {
         helperText='Nft contract address'
         value={nftaddress}
         onChange={(e) => setNftaddress(e.target.value)}
+      />
+      <br />
+      <br />
+      <Typography variant='p' style={{ fontWeight: "500" }}>
+        Claim
+      </Typography>
+      <TextField
+        required
+        fullWidth
+        label='Claim contract address'
+        placeholder='Claim contract address'
+        variant='filled'
+        helperText='Claim contract address'
+        value={claimAddress}
+        onChange={(e) => setClaimAddress(e.target.value)}
       />
       <br />
       <br />

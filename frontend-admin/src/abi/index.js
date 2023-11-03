@@ -8,3 +8,4 @@ export { default as EarthERC20Token } from "./EarthERC20Token.json";
 export { default as EarthStaking } from "./EarthStaking.json";
 export { default as EarthTreasury } from "./EarthTreasury.json";
 // export { default as Nft } from "./Nft.json";
+export { default as Claim } from "./claim.json";

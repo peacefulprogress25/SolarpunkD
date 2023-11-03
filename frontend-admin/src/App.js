@@ -13,45 +13,46 @@ import {
   Fruit,
   Addresses,
   Navbar,
-
 } from "./components";
 
 import { DeployAll, Settings, Home } from "./screens";
+import ClaimNft from "./screens/ClaimNft";
 
 function App() {
   const Routing = () => {
     return (
       <>
         <Navbar />
-        <div className="screen">
-          <div className="addresses">
+        <div className='screen'>
+          <div className='addresses'>
             <Addresses />
           </div>
-          <div className="app">
+          <div className='app'>
             <div>
               <Router>
-                <Route exact path="/deploy-all" component={DeployAll} />
-                <Route exact path="/singlepage" component={SinglePage} />
-                <Route exact path="/exit-queue" component={ExitQueue} />
-                <Route exact path="/" component={Home} />
-                <Route exact path="/earth-staking" component={EarthStaking} />
-                <Route exact path="/pre-sale" component={PreSale} />
-                <Route exact path="/earth-treasury" component={EarthTreasury} />
+                <Route exact path='/claim-nft' component={ClaimNft} />
+                <Route exact path='/deploy-all' component={DeployAll} />
+                <Route exact path='/singlepage' component={SinglePage} />
+                <Route exact path='/exit-queue' component={ExitQueue} />
+                <Route exact path='/' component={Home} />
+                <Route exact path='/earth-staking' component={EarthStaking} />
+                <Route exact path='/pre-sale' component={PreSale} />
+                <Route exact path='/earth-treasury' component={EarthTreasury} />
                 <Route
                   exact
-                  path="/presale-allocation"
+                  path='/presale-allocation'
                   component={PresaleAllocation}
                 />
-                <Route exact path="/locked-fruit" component={LockedFruit} />
+                <Route exact path='/locked-fruit' component={LockedFruit} />
                 <Route
                   exact
-                  path="/earth-erc20token"
+                  path='/earth-erc20token'
                   component={EarthERC20Token}
                 />
-                <Route exact path="/stable-coin" component={StableCoin} />
-                <Route exact path="/fruit" component={Fruit} />
-                <Route exact path="/settings" component={Settings} />
 
+                <Route exact path='/stable-coin' component={StableCoin} />
+                <Route exact path='/fruit' component={Fruit} />
+                <Route exact path='/settings' component={Settings} />
               </Router>
             </div>
           </div>
@@ -61,7 +62,7 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className='app'>
       <Routing />
     </div>
   );

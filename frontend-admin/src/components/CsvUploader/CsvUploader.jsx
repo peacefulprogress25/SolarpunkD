@@ -4,7 +4,7 @@ import { CSVReader } from "react-papaparse";
 
 const buttonRef = React.createRef();
 
-const CsvUploader = ({ setAllocators }) => {
+const CsvUploader = ({ setAllocators, handleFile }) => {
   const handleOpenDialog = (e) => {
     // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
@@ -15,7 +15,9 @@ const CsvUploader = ({ setAllocators }) => {
   const handleOnFileLoad = (data) => {
     data = data.slice(1, data.length - 1);
     data = data.map((d) => Object.assign({}, d.data));
-    setAllocators(data);
+    console.log(data);
+    handleFile && handleFile(data);
+    setAllocators && setAllocators(data);
   };
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -33,6 +35,7 @@ const CsvUploader = ({ setAllocators }) => {
     if (buttonRef.current) {
       buttonRef.current.removeFile(e);
     }
+    console.log(buttonRef);
   };
 
   return (
@@ -42,7 +45,8 @@ const CsvUploader = ({ setAllocators }) => {
       onError={handleOnError}
       noClick
       noDrag
-      onRemoveFile={handleOnRemoveFile}
+      onRemoveFile={handleRemoveFile}
+      addRemoveButton
     >
       {({ file }) => (
         <aside
@@ -53,7 +57,7 @@ const CsvUploader = ({ setAllocators }) => {
           }}
         >
           <button
-            type="button"
+            type='button'
             onClick={handleOpenDialog}
             style={{
               borderRadius: 0,
@@ -82,7 +86,7 @@ const CsvUploader = ({ setAllocators }) => {
           >
             {file && file.name}
           </div>
-          <button
+          {/* <button
             style={{
               borderRadius: 0,
               marginLeft: 0,
@@ -90,10 +94,9 @@ const CsvUploader = ({ setAllocators }) => {
               paddingLeft: 20,
               paddingRight: 20,
             }}
-            onClick={handleRemoveFile}
           >
             Remove
-          </button>
+          </button> */}
         </aside>
       )}
     </CSVReader>

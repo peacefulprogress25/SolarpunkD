@@ -116,7 +116,7 @@ contract Presale is PausableUpgradeable, OwnableUpgradeable {
 
         (uint256 _stablec, uint256 _earth) = TREASURY.intrinsicValueRatio();
 
-        uint256 _earthMinted = (10 * _amountPaidStablec * _earth) /
+        uint256 _earthMinted = (10e18 * _amountPaidStablec * _earth) /
             _stablec /
             mintMultiple;
 

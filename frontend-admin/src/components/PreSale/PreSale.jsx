@@ -48,8 +48,9 @@ const PreSale = () => {
         setGetData({ ...getData, Stablec: info });
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -68,8 +69,9 @@ const PreSale = () => {
         setGetData({ ...getData, Treasury: info });
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -88,8 +90,9 @@ const PreSale = () => {
         setGetData({ ...getData, Staking: info });
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -144,8 +147,9 @@ const PreSale = () => {
         setGetData({ ...getData, UnlockTimestamp: info.toNumber() });
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -164,8 +168,9 @@ const PreSale = () => {
         setGetData({ ...getData, MintMultiple: info.toNumber() });
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -210,7 +215,7 @@ const PreSale = () => {
     if (typeof window.ethereum !== undefined) {
       const providers = new ethers.providers.Web3Provider(window.ethereum);
       const signer = providers.getSigner();
-      const Amount = ethers.utils.parseUnits(_amountPaidStablec, 'ether');
+      const Amount = ethers.utils.parseUnits(_amountPaidStablec, "ether");
 
       const contract = new ethers.Contract(
         PresaleJson.address,
@@ -218,14 +223,13 @@ const PreSale = () => {
         signer
       );
       try {
-        const info = await contract.mint(
-          Amount
-        );
+        const info = await contract.mint(Amount);
         console.log(info);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -244,8 +248,9 @@ const PreSale = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -264,15 +269,16 @@ const PreSale = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
 
   const updateMInt_Multiple = async () => {
     if (typeof window.ethereum !== undefined) {
-      let t = (parseFloat(updateMintMultiple)) * 10;
+      let t = parseFloat(updateMintMultiple) * 10;
       const providers = new ethers.providers.Web3Provider(window.ethereum);
       const signer = providers.getSigner();
       const contract = new ethers.Contract(
@@ -281,12 +287,13 @@ const PreSale = () => {
         signer
       );
       try {
-        const info = await contract.updateMintMuliple(t);
+        const info = await contract.updateMintMultiple(t);
         console.log(info);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
@@ -305,27 +312,27 @@ const PreSale = () => {
         console.log(info);
       } catch (error) {
         console.log(error);
-        alert("transaction fail this is the trxhash   " + error.transactionHash);
-
+        alert(
+          "transaction fail this is the trxhash   " + error.transactionHash
+        );
       }
     }
   };
 
-
   return (
     <div style={{ marginTop: "100px", position: "absolute", right: "40vw" }}>
       <CssBaseline />
-      <Typography variant="h5" style={{ fontWeight: "600" }}>
+      <Typography variant='h5' style={{ fontWeight: "600" }}>
         Pre Sale
       </Typography>
       <Divider />
-      <Typography variant="p" style={{ fontWeight: "600" }}>
+      <Typography variant='p' style={{ fontWeight: "600" }}>
         Get functions
       </Typography>
       <br />
-      <div className="variable-display">
-        <div className="variable-display-titles">
-          <div className="variable-display-title">
+      <div className='variable-display'>
+        <div className='variable-display-titles'>
+          <div className='variable-display-title'>
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={stablec}
@@ -333,7 +340,7 @@ const PreSale = () => {
               Stablec
             </Button>
           </div>
-          <div className="variable-display-title">
+          <div className='variable-display-title'>
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={treasury}
@@ -342,7 +349,7 @@ const PreSale = () => {
             </Button>
           </div>
 
-          <div className="variable-display-title">
+          <div className='variable-display-title'>
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={staking}
@@ -375,7 +382,7 @@ const PreSale = () => {
               Unlock-Timestamp
             </Button>
           </div> */}
-          <div className="variable-display-title">
+          <div className='variable-display-title'>
             <Button
               style={{ backgroundColor: "#1976d2", color: "white" }}
               onClick={mintMultiple}
@@ -385,28 +392,28 @@ const PreSale = () => {
           </div>
         </div>
 
-        <div className="variable-display-values">
-          <div className="variable-display-value">
+        <div className='variable-display-values'>
+          <div className='variable-display-value'>
             <Typography
-              variant="h6"
+              variant='h6'
               style={{ fontWeight: "200", fontSize: "13px" }}
             >
               {getData.Stablec ? `${getData.Stablec}` : ""}
             </Typography>
           </div>
 
-          <div className="variable-display-value">
+          <div className='variable-display-value'>
             <Typography
-              variant="h6"
+              variant='h6'
               style={{ fontWeight: "200", fontSize: "13px" }}
             >
               {getData.Treasury ? `${getData.Treasury}` : ""}
             </Typography>
           </div>
 
-          <div className="variable-display-value">
+          <div className='variable-display-value'>
             <Typography
-              variant="h6"
+              variant='h6'
               style={{ fontWeight: "200", fontSize: "13px" }}
             >
               {getData.Staking ? `${getData.Staking}` : ""}
@@ -443,9 +450,9 @@ const PreSale = () => {
             </Typography>
           </div> */}
 
-          <div className="variable-display-value">
+          <div className='variable-display-value'>
             <Typography
-              variant="h6"
+              variant='h6'
               style={{ fontWeight: "200", fontSize: "13px" }}
             >
               {getData.MintMultiple ? `${getData.MintMultiple}` : ""}
@@ -453,7 +460,7 @@ const PreSale = () => {
           </div>
         </div>
       </div>
-      <Typography variant="h6" style={{ fontWeight: "600" }}>
+      <Typography variant='h6' style={{ fontWeight: "600" }}>
         Set functions
       </Typography>
       {/* <TextField
@@ -476,10 +483,10 @@ const PreSale = () => {
       <TextField
         required
         fullWidth
-        label="Amount Paid Stablec"
-        placeholder="Amount Paid Stablec"
-        variant="filled"
-        helperText="Mint earth"
+        label='Amount Paid Stablec'
+        placeholder='Amount Paid Stablec'
+        variant='filled'
+        helperText='Mint earth'
         value={data.amount}
         onChange={(e) => setData({ ...data, amount: e.target.value })}
       />
@@ -536,21 +543,18 @@ const PreSale = () => {
         UnPause
       </Button>
       <br />
-
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         Presale update mint multiple
       </Typography>
       <TextField
         required
         fullWidth
-        label="Mint multiple"
-        placeholder="Mint multiple 1.2 ,1.3 etc"
-        variant="filled"
-        helperText="Mint multiple 1.2,1.3 etc"
+        label='Mint multiple'
+        placeholder='Mint multiple 1.2 ,1.3 etc'
+        variant='filled'
+        helperText='Mint multiple 1.2,1.3 etc'
         value={updateMintMultiple}
-        onChange={(e) =>
-          setUpdateMintMultiple(e.target.value)
-        }
+        onChange={(e) => setUpdateMintMultiple(e.target.value)}
       />
       <Button
         style={{ backgroundColor: "#1976d2", color: "white", margin: "10px" }}
@@ -561,20 +565,18 @@ const PreSale = () => {
       <br />
       <br />
       <br />
-      <Typography variant="p" style={{ fontWeight: "500" }}>
+      <Typography variant='p' style={{ fontWeight: "500" }}>
         Update Nft contract address
       </Typography>
       <TextField
         required
         fullWidth
-        label="contract address"
-        placeholder="contract address"
-        variant="filled"
-        helperText="contract address"
+        label='contract address'
+        placeholder='contract address'
+        variant='filled'
+        helperText='contract address'
         value={nft}
-        onChange={(e) =>
-          setNft(e.target.value)
-        }
+        onChange={(e) => setNft(e.target.value)}
       />
       <Button
         style={{ backgroundColor: "#1976d2", color: "white", margin: "10px" }}
@@ -582,7 +584,6 @@ const PreSale = () => {
       >
         Update Nft contract address
       </Button>
-
       <br />
     </div>
   );
