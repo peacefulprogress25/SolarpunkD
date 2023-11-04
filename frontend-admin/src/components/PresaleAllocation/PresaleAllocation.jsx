@@ -28,6 +28,7 @@ const PresaleAllocation = () => {
   const [updatemessage, updateupdateMessage] = useState("");
   const [address, setAddress] = useState("");
   const [tokenid, setTokenid] = useState("");
+  const [uri, setUri] = useState("");
 
   //This function uploads the NFT image to IPFS
   // async function OnChangeFile(e) {
@@ -213,6 +214,27 @@ const PresaleAllocation = () => {
         alert("transaction fail this is the trxhash   " + e.transactionHash);
 
         // alert("Upload error" + e);
+      }
+    }
+  }
+
+  async function updateUri(e) {
+    e.preventDefault();
+    if (typeof window.ethereum !== undefined) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        let contract = new ethers.Contract(
+          Soulbound.address,
+          Soulbound.abi,
+          signer
+        );
+
+        let transaction = await contract.updateUri(uri);
+        await transaction.wait();
+      } catch (e) {
+        console.log(e);
+        alert("transaction fail this is the trxhash   " + e.transactionHash);
       }
     }
   }
@@ -408,14 +430,15 @@ const PresaleAllocation = () => {
                 Whitelist
               </Button>
             </div>
-
+            <br />
+            <br />
             <div>
               <h3 className='text-center font-bold text-purple-500 mb-8'>
                 Safe Mint(0x6871ee40)
               </h3>
-              <Typography variant='p' style={{ fontWeight: "500" }}>
+              {/* <Typography variant='p' style={{ fontWeight: "500" }}>
                 Nft Address
-              </Typography>
+              </Typography> */}
               <Button
                 style={{ backgroundColor: "#1976d2", color: "white" }}
                 onClick={safeMint}
@@ -423,6 +446,34 @@ const PresaleAllocation = () => {
                 Safe Mint
               </Button>
             </div>
+
+            <br />
+            <div>
+              <h3 className='text-center font-bold text-purple-500 mb-8'>
+                updateUri (0x570b3c6a)
+              </h3>
+              <Typography variant='p' style={{ fontWeight: "500" }}>
+                URI
+              </Typography>
+              <TextField
+                required
+                fullWidth
+                label='URI'
+                placeholder='URI'
+                variant='filled'
+                helperText='uri'
+                value={uri}
+                onChange={(e) => setUri(e.target.value)}
+              />
+              <Button
+                style={{ backgroundColor: "#1976d2", color: "white" }}
+                onClick={updateUri}
+              >
+                Update URI
+              </Button>
+            </div>
+
+            <br />
           </form>
         </div>
       </div>
