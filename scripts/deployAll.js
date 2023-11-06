@@ -5,6 +5,7 @@ const {
   presale: { mintMultiple },
   stableCoin: stableCoinAddress,
   nftaddress: nftcontractaddress,
+  claimAddress,
 } = require("./deployParameters.json");
 
 async function main() {
@@ -176,6 +177,7 @@ async function main() {
 
   console.log(presale.target);
   console.log(nftcontractaddress);
+  console.log(claimAddress);
 }
 
 main()

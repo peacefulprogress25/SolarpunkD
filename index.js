@@ -11,6 +11,7 @@ const {
   presale: { mintMultiple },
   stableCoin: stableCoinAddress,
   nftaddress: nftcontractaddress,
+  claimAddress,
 } = require("./scripts/deployParameters.json");
 
 const StableCoinData = {
@@ -41,7 +42,7 @@ app.post("/deploy-all", async (req, res) => {
 
     let result = JSON.stringify(stdout.split("\n"));
     result = JSON.parse(result);
-    console.log(result);
+
     res.send(result);
     fs.writeFileSync(
       "./scripts/deployAddresses.json",
