@@ -49,9 +49,7 @@ const DeployAll = () => {
     let postData = {
       earthStaking,
       presale: {
-        mintMultiple: ethers.utils
-          .parseUnits(presale.mintMultiple.toString(), "ether")
-          .toString(),
+        mintMultiple: (presale.mintMultiple * 100000000000000000).toString(),
       },
       stableCoin,
       nftaddress,
