@@ -48,12 +48,17 @@ const DeployAll = () => {
 
     let postData = {
       earthStaking,
-      presale,
+      presale: {
+        mintMultiple: ethers.utils
+          .parseUnits(presale.mintMultiple.toString(), "ether")
+          .toString(),
+      },
       stableCoin,
       nftaddress,
       claimAddress,
     };
     try {
+      console.log(postData);
       const { data } = await axios.post("/deploy-all", postData);
       setisLoading(false);
       window.location.href = "/";

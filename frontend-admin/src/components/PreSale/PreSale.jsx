@@ -278,7 +278,9 @@ const PreSale = () => {
 
   const updateMInt_Multiple = async () => {
     if (typeof window.ethereum !== undefined) {
-      let t = parseFloat(updateMintMultiple) * 10;
+      let value = parseFloat(updateMintMultiple) * 10;
+      let t = ethers.utils.parseUnits(value.toString(), "ether").toString();
+      console.log(t);
       const providers = new ethers.providers.Web3Provider(window.ethereum);
       const signer = providers.getSigner();
       const contract = new ethers.Contract(
