@@ -48,9 +48,7 @@ const DeployAll = () => {
 
     let postData = {
       earthStaking,
-      presale: {
-        mintMultiple: (presale.mintMultiple * 100000000000000000).toString(),
-      },
+      presale,
       stableCoin,
       nftaddress,
       claimAddress,
@@ -75,7 +73,7 @@ const DeployAll = () => {
   const setpresaleMintMultiple = (value) => {
     setMintMultiple(value);
 
-    let t = parseFloat(value);
+    let t = parseFloat(value) * 10;
 
     setPresale({ ...presale, mintMultiple: t });
   };
